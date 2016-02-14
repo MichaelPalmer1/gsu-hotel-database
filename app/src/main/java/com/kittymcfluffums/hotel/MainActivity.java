@@ -26,7 +26,7 @@ import java.util.List;
 public class MainActivity extends AppCompatActivity
 		implements NavigationView.OnNavigationItemSelectedListener {
 
-	private ViewFlipper vf;
+	private ViewFlipper viewFlipper;
 	private CollapsingToolbarLayout collapsingToolbar;
 	final int NAV_HOME = 0, NAV_DEST = 1, NAV_ROOMS = 2, NAV_ROOM_INFO = 3, NAV_RESERVE = 4;
 
@@ -49,7 +49,7 @@ public class MainActivity extends AppCompatActivity
 		NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
 		navigationView.setNavigationItemSelectedListener(this);
 
-		vf = (ViewFlipper) findViewById(R.id.vf);
+		viewFlipper = (ViewFlipper) findViewById(R.id.viewFlipper);
 
 	}
 
@@ -90,18 +90,19 @@ public class MainActivity extends AppCompatActivity
 		// Handle navigation view item clicks here.
 		int id = item.getItemId();
 
+		// @TODO Change these to fragments
 		if (id == R.id.nav_home) {
-			vf.setDisplayedChild(NAV_HOME);
+			viewFlipper.setDisplayedChild(NAV_HOME);
 			collapsingToolbar.setTitle(getString(R.string.app_name));
 		} else if (id == R.id.nav_destinations) {
-			vf.setDisplayedChild(NAV_DEST);
+			viewFlipper.setDisplayedChild(NAV_DEST);
 			collapsingToolbar.setTitle(getString(R.string.nav_destinations));
 		} else if (id == R.id.nav_rooms) {
-			vf.setDisplayedChild(NAV_ROOMS);
+			viewFlipper.setDisplayedChild(NAV_ROOMS);
 			collapsingToolbar.setTitle(getString(R.string.nav_rooms));
 			setupRoomRecycler();
 		} else if (id == R.id.nav_reservations) {
-			vf.setDisplayedChild(NAV_RESERVE);
+			viewFlipper.setDisplayedChild(NAV_RESERVE);
 			collapsingToolbar.setTitle(getString(R.string.nav_reservations));
 		} else if (id == R.id.nav_settings) {
 			startActivity(new Intent(this, SettingsActivity.class));
@@ -113,9 +114,9 @@ public class MainActivity extends AppCompatActivity
 	}
 
 	private void setupRoomRecycler() {
-		RecyclerView recyclerRooms = (RecyclerView) vf.findViewById(R.id.recyclerRooms);
+		RecyclerView recyclerRooms = (RecyclerView) viewFlipper.findViewById(R.id.recyclerRooms);
 
-		LinearLayoutManager llm = new LinearLayoutManager(vf.getContext());
+		LinearLayoutManager llm = new LinearLayoutManager(viewFlipper.getContext());
 		recyclerRooms.setLayoutManager(llm);
 
 		ArrayList<Room> roomList = new ArrayList<>();

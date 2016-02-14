@@ -45,8 +45,9 @@
 
     </android.support.design.widget.AppBarLayout>
 
+    <!-- TODO: Use fragments instead -->
     <ViewFlipper xmlns:android="http://schemas.android.com/apk/res/android"
-                 android:id="@+id/vf"
+                 android:id="@+id/viewFlipper"
                  app:layout_behavior="@string/appbar_scrolling_view_behavior"
                  android:layout_width="fill_parent"
                  android:layout_height="wrap_content">
