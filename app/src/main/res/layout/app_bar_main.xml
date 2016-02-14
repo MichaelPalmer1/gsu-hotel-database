@@ -45,14 +45,18 @@
 
     </android.support.design.widget.AppBarLayout>
 
-    <android.support.v4.widget.NestedScrollView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:scrollbars="vertical"
-        app:layout_behavior="@string/appbar_scrolling_view_behavior">
+    <ViewFlipper xmlns:android="http://schemas.android.com/apk/res/android"
+                 android:id="@+id/vf"
+                 app:layout_behavior="@string/appbar_scrolling_view_behavior"
+                 android:layout_width="fill_parent"
+                 android:layout_height="wrap_content">
 
         <include layout="@layout/content_main"/>
+        <include layout="@layout/content_destinations"/>
+        <include layout="@layout/content_rooms"/>
+        <include layout="@layout/content_room_info"/>
+        <include layout="@layout/content_reserve"/>
 
-    </android.support.v4.widget.NestedScrollView>
+    </ViewFlipper>
 
 </android.support.design.widget.CoordinatorLayout>
