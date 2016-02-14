@@ -161,7 +161,8 @@ public class MainActivity extends AppCompatActivity
 
 		@Override
 		public RoomViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-			View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.cardview_room, parent, false);
+			View view = LayoutInflater.from(parent.getContext())
+									  .inflate(R.layout.cardview_room, parent, false);
 			return new RoomViewHolder(view);
 		}
 
