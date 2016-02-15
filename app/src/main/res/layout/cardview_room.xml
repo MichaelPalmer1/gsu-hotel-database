@@ -21,7 +21,8 @@
             <ImageView
                 android:layout_width="96dp"
                 android:layout_height="128dp"
-                android:scaleType="centerCrop" />
+                android:scaleType="centerCrop"
+                android:contentDescription="@string/picture" />
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -40,14 +41,14 @@
                         android:layout_height="wrap_content"
                         android:textStyle="bold"
                         android:textAppearance="?android:attr/textAppearanceLarge"
-                        android:hint="Room Type" />
+                        android:hint="@string/hint_room_type" />
 
                     <TextView
                         android:id="@+id/room_desc"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:textAppearance="?android:attr/textAppearanceMedium"
-                        android:hint="Description" />
+                        android:hint="@string/hint_description" />
 
                 </LinearLayout>
 
@@ -71,7 +72,7 @@
                         android:textAppearance="?android:attr/textAppearanceMedium"
                         android:textColor="@color/colorAccent"
                         android:textAllCaps="true"
-                        android:text="Learn more" />
+                        android:text="@string/action_learn" />
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -81,7 +82,7 @@
                         android:textAppearance="?android:attr/textAppearanceMedium"
                         android:textColor="@color/colorAccent"
                         android:textAllCaps="true"
-                        android:text="Book" />
+                        android:text="@string/action_book" />
 
                 </LinearLayout>
 
