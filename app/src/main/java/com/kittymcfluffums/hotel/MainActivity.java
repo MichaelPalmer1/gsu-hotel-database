@@ -17,6 +17,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.ViewFlipper;
 
@@ -121,13 +122,13 @@ public class MainActivity extends AppCompatActivity
 
 		ArrayList<Room> roomList = new ArrayList<>();
 
-		roomList.add(new Room("Deluxe Room", "1 King Bed"));
-		roomList.add(new Room("Standard Room", "1 Double Bed"));
-		roomList.add(new Room("Executive Suite", "2 King Beds"));
-		roomList.add(new Room("Best Available", "A futon"));
-		roomList.add(new Room("Budget Room", "Chilled, concrete floor"));
-		roomList.add(new Room("Outside", "Doghouse"));
-		roomList.add(new Room("Penthouse", "Everything your heart desires"));
+		roomList.add(new Room(R.drawable.hotel, "Deluxe Room", "1 King Bed"));
+		roomList.add(new Room(R.drawable.hotel, "Standard Room", "1 Double Bed"));
+		roomList.add(new Room(R.drawable.hotel, "Executive Suite", "2 King Beds"));
+		roomList.add(new Room(R.drawable.hotel, "Best Available", "A futon"));
+		roomList.add(new Room(R.drawable.hotel, "Budget Room", "Chilled, concrete floor"));
+		roomList.add(new Room(R.drawable.hotel, "Outside", "Doghouse"));
+		roomList.add(new Room(R.drawable.hotel, "Penthouse", "Everything your heart desires"));
 
 		RVAdapter adapter = new RVAdapter(roomList);
 		recyclerRooms.setAdapter(adapter);
@@ -136,13 +137,15 @@ public class MainActivity extends AppCompatActivity
 	class RVAdapter extends RecyclerView.Adapter<RVAdapter.RoomViewHolder> {
 
 		class RoomViewHolder extends RecyclerView.ViewHolder {
-			CardView cardView;
-			TextView roomType;
-			TextView roomDesc;
+			CardView  cardView;
+			ImageView roomPic;
+			TextView  roomType;
+			TextView  roomDesc;
 
 			public RoomViewHolder(View view) {
 				super(view);
 				cardView = (CardView) view.findViewById(R.id.card_room);
+				roomPic = (ImageView) view.findViewById(R.id.room_picture);
 				roomType = (TextView) view.findViewById(R.id.room_type);
 				roomDesc = (TextView) view.findViewById(R.id.room_desc);
 			}
@@ -168,6 +171,7 @@ public class MainActivity extends AppCompatActivity
 
 		@Override
 		public void onBindViewHolder(RoomViewHolder holder, int position) {
+			holder.roomPic.setImageResource(rooms.get(position).getRoomPicResource());
 			holder.roomType.setText(rooms.get(position).getRoomType());
 			holder.roomDesc.setText(rooms.get(position).getRoomDesc());
 		}
