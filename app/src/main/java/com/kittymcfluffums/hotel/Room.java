@@ -1,24 +1,26 @@
 package com.kittymcfluffums.hotel;
 
+import android.support.annotation.DrawableRes;
+
 public class Room {
-	private int roomPicResource;
-	private String roomType, roomDesc;
+    private @DrawableRes int roomPicResource;
+    private String roomType, roomDesc;
 
-	public Room(int roomPicResource, String roomType, String roomDesc) {
-		this.roomPicResource = roomPicResource;
-		this.roomType = roomType;
-		this.roomDesc = roomDesc;
-	}
+    public Room(@DrawableRes int roomPicResource, String roomType, String roomDesc) {
+        this.roomPicResource = roomPicResource;
+        this.roomType = roomType;
+        this.roomDesc = roomDesc;
+    }
 
-	public int getRoomPicResource() {
-		return roomPicResource;
-	}
+    public @DrawableRes int getRoomPicResource() {
+        return roomPicResource;
+    }
 
-	public String getRoomType() {
-		return roomType;
-	}
+    public String getRoomType() {
+        return roomType;
+    }
 
-	public String getRoomDesc() {
-		return roomDesc;
-	}
+    public String getRoomDesc() {
+        return roomDesc;
+    }
 }
