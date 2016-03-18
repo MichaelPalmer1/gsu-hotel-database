@@ -1,6 +1,5 @@
 package com.kittymcfluffums.hotel;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.StringRes;
 import android.support.design.widget.CollapsingToolbarLayout;
@@ -84,9 +83,6 @@ public class MainActivity extends AppCompatActivity
                 break;
             case R.id.nav_reservations:
                 setFragment(new ReservationsFragment(), R.string.nav_reservations);
-                break;
-            case R.id.nav_settings:
-                startActivity(new Intent(this, SettingsActivity.class));
                 break;
         }
 
