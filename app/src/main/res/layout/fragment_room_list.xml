@@ -8,5 +8,6 @@
     android:id="@+id/list"
     android:name="com.kittymcfluffums.hotel.RoomFragment"
     app:layoutManager="LinearLayoutManager"
+    android:scrollbars="vertical"
     tools:context=".fragments.RoomFragment"
     tools:listitem="@layout/fragment_room" />
