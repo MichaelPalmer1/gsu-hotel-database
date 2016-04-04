@@ -29,10 +29,9 @@ public class RoomFragment extends Fragment {
         ITEMS.add(new Room(R.drawable.hotel, "Deluxe Room", "1 King Bed"));
         ITEMS.add(new Room(R.drawable.hotel, "Standard Room", "1 Double Bed"));
         ITEMS.add(new Room(R.drawable.hotel, "Executive Suite", "2 King Beds"));
-        ITEMS.add(new Room(R.drawable.hotel, "Best Available", "A futon"));
-        ITEMS.add(new Room(R.drawable.hotel, "Budget Room", "Chilled, concrete floor"));
-        ITEMS.add(new Room(R.drawable.hotel, "Outside", "Doghouse"));
-        ITEMS.add(new Room(R.drawable.hotel, "Penthouse", "Everything your heart desires"));
+        ITEMS.add(new Room(R.drawable.hotel, "Travel Suite", "1 futon"));
+        ITEMS.add(new Room(R.drawable.hotel, "Honeymoon Suite", "A romantic getaway"));
+        ITEMS.add(new Room(R.drawable.hotel, "Penthouse", "A beautiful view"));
     }
 
     private OnListFragmentInteractionListener mListener;
