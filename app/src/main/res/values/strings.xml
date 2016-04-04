@@ -8,7 +8,12 @@
     <string name="nav_destinations">Destinations</string>
     <string name="nav_rooms">Rooms</string>
     <string name="nav_reservations">Reservations</string>
+    <string name="backdrop_description">Parallax image</string>
 
-    <!-- Menu -->
-    <string name="action_settings">Settings</string>
+    <!-- Room Types -->
+    <string name="picture">Picture</string>
+    <string name="action_learn">Learn More</string>
+    <string name="action_book">Book</string>
+    <string name="hint_room_type">Room Type</string>
+    <string name="hint_description">Description</string>
 </resources>
