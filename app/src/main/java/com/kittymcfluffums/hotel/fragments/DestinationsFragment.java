@@ -3,10 +3,13 @@ package com.kittymcfluffums.hotel.fragments;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.kittymcfluffums.hotel.API;
+import com.kittymcfluffums.hotel.Constants;
 import com.kittymcfluffums.hotel.R;
 
 
@@ -24,6 +27,8 @@ public class DestinationsFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
+        HotelAPI api = new HotelAPI();
+        api.execute(Constants.API_URL + "/query", "{\"query\": \"show tables\"}");
         return inflater.inflate(R.layout.fragment_destinations, container, false);
     }
 
@@ -62,5 +67,11 @@ public class DestinationsFragment extends Fragment {
      */
     public interface OnFragmentInteractionListener {
         void onFragmentInteraction(Object object);
+    }
+
+    class HotelAPI extends API.Post {
+        protected void processData(String json) {
+            Log.d("PostData", json);
+        }
     }
 }

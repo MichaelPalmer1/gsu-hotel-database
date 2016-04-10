@@ -5,7 +5,6 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,10 +14,6 @@ import com.kittymcfluffums.hotel.Constants;
 import com.kittymcfluffums.hotel.R;
 import com.kittymcfluffums.hotel.Room;
 import com.kittymcfluffums.hotel.RoomRecyclerViewAdapter;
-
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
 
 import java.util.ArrayList;
 
@@ -56,7 +51,7 @@ public class RoomFragment extends Fragment {
             recyclerView.setAdapter(new RoomRecyclerViewAdapter(ITEMS, mListener));
         }
 
-        TestAPI api = new TestAPI();
+        TestAPIRoom api = new TestAPIRoom();
         api.execute(Constants.API_URL);
 
         return view;
@@ -93,10 +88,9 @@ public class RoomFragment extends Fragment {
         void onListFragmentInteraction(Object object);
     }
 
-    class TestAPI extends API {
+    class TestAPIRoom extends API.Get {
 
         protected void processData(String json) {
-//            Log.d("TestAPI", "Got it");
 //            try {
 //                JSONArray ja = json.names();
 //                Log.d("API_Objects", ja.toString());

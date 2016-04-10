@@ -14,7 +14,6 @@ import com.kittymcfluffums.hotel.R;
 
 import org.json.JSONArray;
 import org.json.JSONException;
-import org.json.JSONObject;
 
 
 /**
@@ -73,7 +72,7 @@ public class HomeFragment extends Fragment {
         void onFragmentInteraction(Object object);
     }
 
-    class HotelAPI extends API {
+    class HotelAPI extends API.Get {
         protected void processData(String json) {
             try {
                 JSONArray jsonArray = new JSONArray(json);
