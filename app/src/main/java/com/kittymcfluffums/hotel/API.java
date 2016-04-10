@@ -65,7 +65,6 @@ public class API {
         }
     }
 
-    // TODO: Not done yet with this
     public static abstract class Post extends AsyncTask<String, Void, String> {
 
         protected abstract void processData(String data);

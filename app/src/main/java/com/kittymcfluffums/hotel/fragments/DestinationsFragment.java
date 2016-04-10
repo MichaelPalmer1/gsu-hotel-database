@@ -28,7 +28,7 @@ public class DestinationsFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         HotelAPI api = new HotelAPI();
-        api.execute(Constants.API_URL + "/query", "{\"query\": \"show tables\"}");
+        api.execute(Constants.API_QUERY_URL, "{\"query\": \"show tables\"}");
         return inflater.inflate(R.layout.fragment_destinations, container, false);
     }
 
