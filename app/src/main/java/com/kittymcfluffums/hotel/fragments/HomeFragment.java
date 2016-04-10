@@ -3,11 +3,18 @@ package com.kittymcfluffums.hotel.fragments;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.kittymcfluffums.hotel.API;
+import com.kittymcfluffums.hotel.Constants;
 import com.kittymcfluffums.hotel.R;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 
 /**
@@ -24,6 +31,8 @@ public class HomeFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
+        HotelAPI api = new HotelAPI();
+        api.execute(Constants.API_URL + "/Hotel/");
         return inflater.inflate(R.layout.fragment_home, container, false);
     }
 
@@ -62,5 +71,18 @@ public class HomeFragment extends Fragment {
      */
     public interface OnFragmentInteractionListener {
         void onFragmentInteraction(Object object);
+    }
+
+    class HotelAPI extends API {
+        protected void processData(String json) {
+            try {
+                JSONArray jsonArray = new JSONArray(json);
+                for (int i = 0; i < jsonArray.length(); i++) {
+                    Log.d("Hotels", jsonArray.getJSONObject(i).toString());
+                }
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+        }
     }
 }

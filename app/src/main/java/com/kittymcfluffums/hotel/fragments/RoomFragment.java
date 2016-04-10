@@ -5,13 +5,20 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.kittymcfluffums.hotel.API;
+import com.kittymcfluffums.hotel.Constants;
 import com.kittymcfluffums.hotel.R;
 import com.kittymcfluffums.hotel.Room;
 import com.kittymcfluffums.hotel.RoomRecyclerViewAdapter;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 
@@ -48,6 +55,10 @@ public class RoomFragment extends Fragment {
             recyclerView.setLayoutManager(new LinearLayoutManager(context));
             recyclerView.setAdapter(new RoomRecyclerViewAdapter(ITEMS, mListener));
         }
+
+        TestAPI api = new TestAPI();
+        api.execute(Constants.API_URL);
+
         return view;
     }
 
@@ -80,5 +91,22 @@ public class RoomFragment extends Fragment {
      */
     public interface OnListFragmentInteractionListener {
         void onListFragmentInteraction(Object object);
+    }
+
+    class TestAPI extends API {
+
+        protected void processData(String json) {
+//            Log.d("TestAPI", "Got it");
+//            try {
+//                JSONArray ja = json.names();
+//                Log.d("API_Objects", ja.toString());
+//                for (int i = 0; i < ja.length(); i++) {
+//                    String url = json.getString(ja.getString(i));
+//                    Log.d(ja.getString(i), url);
+//                }
+//            } catch (JSONException e) {
+//                e.printStackTrace();
+//            }
+        }
     }
 }
