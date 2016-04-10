@@ -78,7 +78,6 @@ public class API {
                 HttpURLConnection conn = (HttpURLConnection) ((new URL (data[0]).openConnection()));
                 conn.setDoOutput(true);
                 conn.setRequestProperty("Content-Type", "application/json");
-                conn.setRequestProperty("Accept", "application/json");
                 conn.setRequestMethod("POST");
                 conn.connect();
 
