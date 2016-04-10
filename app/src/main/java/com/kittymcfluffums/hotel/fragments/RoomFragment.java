@@ -5,7 +5,6 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -32,7 +31,7 @@ public class RoomFragment extends Fragment {
     public static final ArrayList<Room> ITEMS = new ArrayList<>();
     private RecyclerView recyclerView;
 
-    private OnListFragmentInteractionListener mListener;
+    protected OnListFragmentInteractionListener mListener;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -80,7 +79,7 @@ public class RoomFragment extends Fragment {
      * for more information.
      */
     public interface OnListFragmentInteractionListener {
-        void onListFragmentInteraction(Object object);
+        void onListFragmentInteraction(Room room);
     }
 
     class APIRoom extends API.Get {
@@ -93,9 +92,9 @@ public class RoomFragment extends Fragment {
                     ITEMS.add(new Room(
                             R.drawable.hotel,
                             jsonArray.getJSONObject(i).getString("description"),
-                            String.format(Locale.US, "$%.2f per night", Double.parseDouble(
-                                    jsonArray.getJSONObject(i).getString("nightly_rate")
-                            ))
+                            String.format(Locale.US, "$%.2f per night",
+                                    jsonArray.getJSONObject(i).getDouble("nightly_rate")),
+                            jsonArray.getJSONObject(i).getString("room_type_id")
                     ));
                 }
 

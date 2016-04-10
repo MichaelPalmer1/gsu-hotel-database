@@ -110,7 +110,12 @@ public class MainActivity extends AppCompatActivity
     }
 
     @Override
-    public void onListFragmentInteraction(Object object) {
-        // TODO: Implement this
+    public void onListFragmentInteraction(Room room) {
+        Bundle args = new Bundle();
+        args.putString("room_type", room.getRoomType());
+        args.putString("room_type_id", room.getRoomTypeId());
+        RoomInfoDialog dialog = new RoomInfoDialog();
+        dialog.setArguments(args);
+        dialog.show(getSupportFragmentManager(), "RoomInfoDialog");
     }
 }

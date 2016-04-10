@@ -62,23 +62,22 @@
                 android:gravity="center|start"
                 android:orientation="horizontal">
 
-                <TextView
+                <Button
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_height="55dp"
                     android:layout_marginStart="10dp"
                     android:layout_marginEnd="30dp"
-                    android:textAppearance="?android:attr/textAppearanceMedium"
-                    android:textColor="@color/colorAccent"
+                    android:id="@+id/btn_learn_more"
+                    style="@style/Widget.AppCompat.Button.Colored"
                     android:textAllCaps="true"
                     android:text="@string/action_learn" />
 
-                <TextView
+                <Button
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_height="55dp"
                     android:layout_marginStart="30dp"
                     android:layout_marginEnd="10dp"
-                    android:textAppearance="?android:attr/textAppearanceMedium"
-                    android:textColor="@color/colorAccent"
+                    style="@style/Widget.AppCompat.Button.Colored"
                     android:textAllCaps="true"
                     android:text="@string/action_book" />
 

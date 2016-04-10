@@ -7,6 +7,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import com.kittymcfluffums.hotel.API;
 import com.kittymcfluffums.hotel.Constants;
@@ -22,14 +23,17 @@ import com.kittymcfluffums.hotel.R;
 public class DestinationsFragment extends Fragment {
 
     private OnFragmentInteractionListener mListener;
+    private TextView destinations;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
+        View view = inflater.inflate(R.layout.fragment_destinations, container, false);
+        destinations = (TextView) view.findViewById(R.id.destinations);
         HotelAPI api = new HotelAPI();
         api.execute(Constants.API_QUERY_URL, "{\"query\": \"show tables\"}");
-        return inflater.inflate(R.layout.fragment_destinations, container, false);
+        return view;
     }
 
     // TODO: Implement an action
@@ -72,6 +76,7 @@ public class DestinationsFragment extends Fragment {
     class HotelAPI extends API.Post {
         protected void processData(String json) {
             Log.d("PostData", json);
+            destinations.setText(json);
         }
     }
 }

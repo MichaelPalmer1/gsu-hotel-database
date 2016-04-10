@@ -96,7 +96,7 @@ public class HomeFragment extends Fragment {
                         hotel_city_state_zip.setText(getString(R.string.city_state_zip,
                                 hotel.getString("city"),
                                 hotel.getString("state"),
-                                Integer.parseInt(hotel.getString("zipcode"))
+                                hotel.getInt("zipcode")
                         ));
                         hotel_email.setText(hotel.getString("email"));
                         hotel_website.setText(hotel.getString("website"));
