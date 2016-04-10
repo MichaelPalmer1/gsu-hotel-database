@@ -12,6 +12,7 @@ import java.io.OutputStream;
 import java.io.OutputStreamWriter;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.Locale;
 
 public class API {
     public static abstract class Get extends AsyncTask<String, Void, String> {
@@ -28,7 +29,7 @@ public class API {
                 // Check response code
                 if(conn.getResponseCode() != 200) {
                     throw new Exception(
-                            String.format(
+                            String.format(Locale.US,
                                     "Could not get data from remote source. HTTP response: %s (%d)",
                                     conn.getResponseMessage(), conn.getResponseCode()
                             )

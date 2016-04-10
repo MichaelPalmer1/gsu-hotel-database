@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,7 +16,11 @@ import com.kittymcfluffums.hotel.R;
 import com.kittymcfluffums.hotel.Room;
 import com.kittymcfluffums.hotel.RoomRecyclerViewAdapter;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+
 import java.util.ArrayList;
+import java.util.Locale;
 
 /**
  * Fragment for the rooms screen.
@@ -25,16 +30,7 @@ import java.util.ArrayList;
 public class RoomFragment extends Fragment {
 
     public static final ArrayList<Room> ITEMS = new ArrayList<>();
-
-    static {
-        // Create some sample data
-        ITEMS.add(new Room(R.drawable.hotel, "Deluxe Room", "1 King Bed"));
-        ITEMS.add(new Room(R.drawable.hotel, "Standard Room", "1 Double Bed"));
-        ITEMS.add(new Room(R.drawable.hotel, "Executive Suite", "2 King Beds"));
-        ITEMS.add(new Room(R.drawable.hotel, "Travel Suite", "1 futon"));
-        ITEMS.add(new Room(R.drawable.hotel, "Honeymoon Suite", "A romantic getaway"));
-        ITEMS.add(new Room(R.drawable.hotel, "Penthouse", "A beautiful view"));
-    }
+    private RecyclerView recyclerView;
 
     private OnListFragmentInteractionListener mListener;
 
@@ -46,13 +42,12 @@ public class RoomFragment extends Fragment {
         // Set the adapter
         if (view instanceof RecyclerView) {
             Context context = view.getContext();
-            RecyclerView recyclerView = (RecyclerView) view;
+            recyclerView = (RecyclerView) view;
             recyclerView.setLayoutManager(new LinearLayoutManager(context));
-            recyclerView.setAdapter(new RoomRecyclerViewAdapter(ITEMS, mListener));
         }
 
-        TestAPIRoom api = new TestAPIRoom();
-        api.execute(Constants.API_URL);
+        APIRoom api = new APIRoom();
+        api.execute(Constants.API_URL + "/Room_Types/");
 
         return view;
     }
@@ -88,19 +83,27 @@ public class RoomFragment extends Fragment {
         void onListFragmentInteraction(Object object);
     }
 
-    class TestAPIRoom extends API.Get {
+    class APIRoom extends API.Get {
 
         protected void processData(String json) {
-//            try {
-//                JSONArray ja = json.names();
-//                Log.d("API_Objects", ja.toString());
-//                for (int i = 0; i < ja.length(); i++) {
-//                    String url = json.getString(ja.getString(i));
-//                    Log.d(ja.getString(i), url);
-//                }
-//            } catch (JSONException e) {
-//                e.printStackTrace();
-//            }
+            try {
+                JSONArray jsonArray = new JSONArray(json);
+                ITEMS.clear();
+                for (int i = 0; i < jsonArray.length(); i++) {
+                    ITEMS.add(new Room(
+                            R.drawable.hotel,
+                            jsonArray.getJSONObject(i).getString("description"),
+                            String.format(Locale.US, "$%.2f per night", Double.parseDouble(
+                                    jsonArray.getJSONObject(i).getString("nightly_rate")
+                            ))
+                    ));
+                }
+
+                recyclerView.setAdapter(new RoomRecyclerViewAdapter(ITEMS, mListener));
+
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
         }
     }
 }
