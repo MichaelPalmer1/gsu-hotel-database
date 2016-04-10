@@ -10,6 +10,9 @@
     <string name="nav_reservations">Reservations</string>
     <string name="backdrop_description">Parallax image</string>
 
+    <!-- Home -->
+    <string name="city_state_zip">%1$s, %2$s %3$d</string>
+
     <!-- Room Types -->
     <string name="picture">Picture</string>
     <string name="action_learn">Learn More</string>
