@@ -8,6 +8,8 @@
     <string name="nav_destinations">Destinations</string>
     <string name="nav_rooms">Rooms</string>
     <string name="nav_reservations">Reservations</string>
+    <string name="nav_guests">Guests</string>
+    <string name="nav_employees">Employees</string>
     <string name="backdrop_description">Parallax image</string>
 
     <!-- Home -->
@@ -19,4 +21,16 @@
     <string name="action_book">Book</string>
     <string name="hint_room_type">Room Type</string>
     <string name="hint_description">Description</string>
+
+    <!-- Guests -->
+    <string name="hint_name">John H. Doe</string>
+    <string name="hint_phone">123-456-7890</string>
+    <string name="hint_email">email@example.com</string>
+
+    <!-- Employee -->
+    <string name="hint_position">Position</string>
+    <string name="hint_demographic">Demographic</string>
+    <string name="hint_age">Age</string>
+    <string name="hint_date">Date</string>
+    <string name="hint_salary">Salary</string>
 </resources>

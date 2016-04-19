@@ -20,6 +20,14 @@
             android:id="@+id/nav_reservations"
             android:icon="@drawable/ic_card_travel_black_24dp"
             android:title="@string/nav_reservations"/>
+        <item
+            android:id="@+id/nav_guests"
+            android:icon="@drawable/ic_person_black_24dp"
+            android:title="@string/nav_guests"/>
+        <item
+            android:id="@+id/nav_employees"
+            android:icon="@drawable/ic_supervisor_account_black_24dp"
+            android:title="@string/nav_employees"/>
     </group>
 
 </menu>
