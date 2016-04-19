@@ -113,7 +113,7 @@ public class MainActivity extends AppCompatActivity
     public void onListFragmentInteraction(Room room) {
         Bundle args = new Bundle();
         args.putString("room_type", room.getRoomType());
-        args.putString("room_type_id", room.getRoomTypeId());
+        args.putInt("room_type_id", room.getRoomTypeId());
         RoomInfoDialog dialog = new RoomInfoDialog();
         dialog.setArguments(args);
         dialog.show(getSupportFragmentManager(), "RoomInfoDialog");

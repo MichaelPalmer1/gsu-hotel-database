@@ -5,7 +5,6 @@ import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -26,8 +25,8 @@ import java.util.HashMap;
  * Fragment for the rooms screen.
  */
 public class RoomInfoDialog extends DialogFragment {
-    private String room_type_id;
-    private static ArrayList<HashMap<String, String>> rooms = new ArrayList<>();
+    private int room_type_id;
+    private static ArrayList<HashMap<String, Object>> rooms = new ArrayList<>();
     private RecyclerView recyclerView;
 
     @Override
@@ -36,7 +35,7 @@ public class RoomInfoDialog extends DialogFragment {
         View rootView = inflater.inflate(R.layout.dialog_room_info_list, container, false);
 
         String room_type = getArguments().getString("room_type");
-        room_type_id = getArguments().getString("room_type_id");
+        room_type_id = getArguments().getInt("room_type_id");
         super.getDialog().setTitle(room_type);
 
         if (rootView instanceof RecyclerView) {
@@ -58,10 +57,10 @@ public class RoomInfoDialog extends DialogFragment {
                 rooms.clear();
                 for (int i = 0; i < jsonArray.length(); i++) {
                     JSONObject row = jsonArray.getJSONObject(i);
-                    if (row.getString("room_type_id").equals(room_type_id)) {
-                        HashMap<String, String> hash = new HashMap<>();
-                        hash.put("room_number", row.getString("room_number"));
-                        hash.put("is_available", row.getString("is_available"));
+                    if (row.getInt("room_type_id") == room_type_id) {
+                        HashMap<String, Object> hash = new HashMap<>();
+                        hash.put("room_number", row.getInt("room_number"));
+                        hash.put("is_available", row.getInt("is_available") == 1);
                         rooms.add(hash);
                     }
                 }

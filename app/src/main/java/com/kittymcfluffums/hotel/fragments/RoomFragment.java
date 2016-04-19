@@ -94,7 +94,7 @@ public class RoomFragment extends Fragment {
                             jsonArray.getJSONObject(i).getString("description"),
                             String.format(Locale.US, "$%.2f per night",
                                     jsonArray.getJSONObject(i).getDouble("nightly_rate")),
-                            jsonArray.getJSONObject(i).getString("room_type_id")
+                            jsonArray.getJSONObject(i).getInt("room_type_id")
                     ));
                 }
 

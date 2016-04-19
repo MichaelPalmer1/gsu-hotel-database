@@ -4,9 +4,10 @@ import android.support.annotation.DrawableRes;
 
 public class Room {
     private @DrawableRes int roomPicResource;
-    private String roomType, roomDesc, roomTypeId;
+    private String roomType, roomDesc;
+    private int roomTypeId;
 
-    public Room(@DrawableRes int roomPicResource, String roomType, String roomDesc, String roomTypeId) {
+    public Room(@DrawableRes int roomPicResource, String roomType, String roomDesc, int roomTypeId) {
         this.roomPicResource = roomPicResource;
         this.roomType = roomType;
         this.roomDesc = roomDesc;
@@ -25,7 +26,7 @@ public class Room {
         return roomDesc;
     }
 
-    public String getRoomTypeId() {
+    public int getRoomTypeId() {
         return roomTypeId;
     }
 }

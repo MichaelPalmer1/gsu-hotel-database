@@ -13,9 +13,9 @@ import java.util.List;
 public class RoomInfoRecyclerViewAdapter extends
         RecyclerView.Adapter<RoomInfoRecyclerViewAdapter.ViewHolder> {
 
-    private final List<HashMap<String, String>> mValues;
+    private final List<HashMap<String, Object>> mValues;
 
-    public RoomInfoRecyclerViewAdapter(List<HashMap<String, String>> items) {
+    public RoomInfoRecyclerViewAdapter(List<HashMap<String, Object>> items) {
         mValues = items;
     }
 
@@ -30,8 +30,8 @@ public class RoomInfoRecyclerViewAdapter extends
     public void onBindViewHolder(final ViewHolder holder, int position) {
         holder.mItem = mValues.get(position);
         holder.mIdView.setText(String.format("Room %s", mValues.get(position).get("room_number")));
-        String availability = mValues.get(position).get("is_available");
-        if (availability.equals("yes")) {
+        Boolean availability = (Boolean) mValues.get(position).get("is_available");
+        if (availability) {
             holder.mContentView.setText("Available");
         } else {
             holder.mContentView.setText("Unavailable");
@@ -48,7 +48,7 @@ public class RoomInfoRecyclerViewAdapter extends
         public final View mView;
         public final TextView mIdView;
         public final TextView mContentView;
-        public HashMap<String, String> mItem;
+        public HashMap<String, Object> mItem;
 
         public ViewHolder(View view) {
             super(view);
