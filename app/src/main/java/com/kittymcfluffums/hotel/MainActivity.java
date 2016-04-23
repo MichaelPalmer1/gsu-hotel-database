@@ -17,7 +17,6 @@ import com.kittymcfluffums.hotel.fragments.*;
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener,
         HomeFragment.OnFragmentInteractionListener,
-        DestinationsFragment.OnFragmentInteractionListener,
         RoomFragment.OnListFragmentInteractionListener,
         ReservationsFragment.OnFragmentInteractionListener {
 
@@ -74,9 +73,6 @@ public class MainActivity extends AppCompatActivity
         switch (id) {
             case R.id.nav_home:
                 setFragment(new HomeFragment(), R.string.app_name);
-                break;
-            case R.id.nav_destinations:
-                setFragment(new DestinationsFragment(), R.string.nav_destinations);
                 break;
             case R.id.nav_rooms:
                 setFragment(new RoomFragment(), R.string.nav_rooms);
