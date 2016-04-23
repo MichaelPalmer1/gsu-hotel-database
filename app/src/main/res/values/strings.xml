@@ -5,7 +5,6 @@
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
     <string name="nav_home">Home</string>
-    <string name="nav_destinations">Destinations</string>
     <string name="nav_rooms">Rooms</string>
     <string name="nav_reservations">Reservations</string>
     <string name="nav_guests">Guests</string>
