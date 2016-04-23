@@ -18,7 +18,9 @@ public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener,
         HomeFragment.OnFragmentInteractionListener,
         RoomFragment.OnListFragmentInteractionListener,
-        ReservationsFragment.OnFragmentInteractionListener {
+        ReservationsFragment.OnFragmentInteractionListener,
+        GuestFragment.OnListFragmentInteractionListener,
+        EmployeeFragment.OnListFragmentInteractionListener {
 
     private CollapsingToolbarLayout collapsingToolbar;
 
@@ -80,6 +82,12 @@ public class MainActivity extends AppCompatActivity
             case R.id.nav_reservations:
                 setFragment(new ReservationsFragment(), R.string.nav_reservations);
                 break;
+            case R.id.nav_guests:
+                setFragment(new GuestFragment(), R.string.nav_guests);
+                break;
+            case R.id.nav_employees:
+                setFragment(new EmployeeFragment(), R.string.nav_employees);
+                break;
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -106,7 +114,22 @@ public class MainActivity extends AppCompatActivity
     }
 
     @Override
-    public void onListFragmentInteraction(Object object) {
+    public void onListFragmentInteraction(Room room) {
+        Bundle args = new Bundle();
+        args.putString("room_type", room.getRoomType());
+        args.putInt("room_type_id", room.getRoomTypeId());
+        RoomInfoDialog dialog = new RoomInfoDialog();
+        dialog.setArguments(args);
+        dialog.show(getSupportFragmentManager(), "RoomInfoDialog");
+    }
+
+    @Override
+    public void onListFragmentInteraction(Guest guest) {
+        // TODO: Implement this
+    }
+
+    @Override
+    public void onListFragmentInteraction(Employee employee) {
         // TODO: Implement this
     }
 }

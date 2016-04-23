@@ -4,6 +4,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -40,12 +41,22 @@ public class RoomRecyclerViewAdapter extends
         holder.mIdView.setText(mValues.get(position).getRoomType());
         holder.mImageView.setImageResource(mValues.get(position).getRoomPicResource());
         holder.mContentView.setText(mValues.get(position).getRoomDesc());
-        holder.mView.setOnClickListener(new View.OnClickListener() {
+//        holder.mView.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                if (null != mListener) {
+//                    // Notify the active callbacks interface (the activity, if the
+//                    // fragment is attached to one) that an item has been selected.
+//                    mListener.onListFragmentInteraction(holder.mItem);
+//                }
+//            }
+//        });
+        Button learn_more = (Button) holder.mView.findViewById(R.id.btn_learn_more);
+        learn_more.setOnClickListener(new View.OnClickListener() {
+
             @Override
             public void onClick(View v) {
-                if (null != mListener) {
-                    // Notify the active callbacks interface (the activity, if the
-                    // fragment is attached to one) that an item has been selected.
+                if (mListener != null) {
                     mListener.onListFragmentInteraction(holder.mItem);
                 }
             }

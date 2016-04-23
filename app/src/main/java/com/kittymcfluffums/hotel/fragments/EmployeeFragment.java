@@ -11,24 +11,23 @@ import android.view.ViewGroup;
 
 import com.kittymcfluffums.hotel.API;
 import com.kittymcfluffums.hotel.Constants;
+import com.kittymcfluffums.hotel.Employee;
+import com.kittymcfluffums.hotel.EmployeeRecyclerViewAdapter;
 import com.kittymcfluffums.hotel.R;
-import com.kittymcfluffums.hotel.Room;
-import com.kittymcfluffums.hotel.RoomRecyclerViewAdapter;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 
 import java.util.ArrayList;
-import java.util.Locale;
 
 /**
- * Fragment for the rooms screen.
+ * Fragment for the employee screen.
  * Activities containing this fragment MUST implement the {@link OnListFragmentInteractionListener}
  * interface.
  */
-public class RoomFragment extends Fragment {
+public class EmployeeFragment extends Fragment {
 
-    public static final ArrayList<Room> ITEMS = new ArrayList<>();
+    public static final ArrayList<Employee> ITEMS = new ArrayList<>();
     private RecyclerView recyclerView;
 
     protected OnListFragmentInteractionListener mListener;
@@ -36,7 +35,7 @@ public class RoomFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_room_list, container, false);
+        View view = inflater.inflate(R.layout.fragment_employee_list, container, false);
 
         // Set the adapter
         if (view instanceof RecyclerView) {
@@ -45,8 +44,8 @@ public class RoomFragment extends Fragment {
             recyclerView.setLayoutManager(new LinearLayoutManager(context));
         }
 
-        APIRoom api = new APIRoom();
-        api.execute(Constants.API_URL + "/Room_Types/");
+        APIEmployee api = new APIEmployee();
+        api.execute(Constants.API_URL + "/Employee/");
 
         return view;
     }
@@ -79,26 +78,29 @@ public class RoomFragment extends Fragment {
      * for more information.
      */
     public interface OnListFragmentInteractionListener {
-        void onListFragmentInteraction(Room room);
+        void onListFragmentInteraction(Employee employee);
     }
 
-    class APIRoom extends API.Get {
+    class APIEmployee extends API.Get {
 
         protected void processData(String json) {
             try {
                 JSONArray jsonArray = new JSONArray(json);
                 ITEMS.clear();
                 for (int i = 0; i < jsonArray.length(); i++) {
-                    ITEMS.add(new Room(
-                            R.drawable.hotel,
-                            jsonArray.getJSONObject(i).getString("description"),
-                            String.format(Locale.US, "$%.2f per night",
-                                    jsonArray.getJSONObject(i).getDouble("nightly_rate")),
-                            jsonArray.getJSONObject(i).getInt("room_type_id")
+                    ITEMS.add(new Employee(
+                            jsonArray.getJSONObject(i).getString("first_name"),
+                            jsonArray.getJSONObject(i).getString("last_name"),
+                            jsonArray.getJSONObject(i).getString("demographic"),
+                            jsonArray.getJSONObject(i).getString("gender"),
+                            jsonArray.getJSONObject(i).getString("position"),
+                            jsonArray.getJSONObject(i).getString("date_employed"),
+                            jsonArray.getJSONObject(i).getDouble("salary"),
+                            jsonArray.getJSONObject(i).getInt("age")
                     ));
                 }
 
-                recyclerView.setAdapter(new RoomRecyclerViewAdapter(ITEMS, mListener));
+                recyclerView.setAdapter(new EmployeeRecyclerViewAdapter(ITEMS, mListener));
 
             } catch (JSONException e) {
                 e.printStackTrace();
