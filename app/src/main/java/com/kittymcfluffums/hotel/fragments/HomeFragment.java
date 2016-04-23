@@ -8,7 +8,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.kittymcfluffums.hotel.API;
+import com.kittymcfluffums.hotel.API.APIGet;
 import com.kittymcfluffums.hotel.Constants;
 import com.kittymcfluffums.hotel.R;
 
@@ -30,8 +30,8 @@ public class HomeFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        HotelAPI api = new HotelAPI();
-        api.execute(Constants.API_URL + "/Hotel/");
+        APIGet get = new APIGet();
+        get.execute();
         return inflater.inflate(R.layout.fragment_home, container, false);
     }
 
@@ -72,16 +72,4 @@ public class HomeFragment extends Fragment {
         void onFragmentInteraction(Object object);
     }
 
-    class HotelAPI extends API.Get {
-        protected void processData(String json) {
-            try {
-                JSONArray jsonArray = new JSONArray(json);
-                for (int i = 0; i < jsonArray.length(); i++) {
-                    Log.d("Hotels", jsonArray.getJSONObject(i).toString());
-                }
-            } catch (JSONException e) {
-                e.printStackTrace();
-            }
-        }
-    }
 }

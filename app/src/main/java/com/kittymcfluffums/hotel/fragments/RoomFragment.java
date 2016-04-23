@@ -9,7 +9,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.kittymcfluffums.hotel.API;
+import com.kittymcfluffums.hotel.API.API;
 import com.kittymcfluffums.hotel.Constants;
 import com.kittymcfluffums.hotel.R;
 import com.kittymcfluffums.hotel.Room;
@@ -88,9 +88,9 @@ public class RoomFragment extends Fragment {
         void onListFragmentInteraction(Object object);
     }
 
-    class TestAPIRoom extends API.Get {
-
-        protected void processData(String json) {
+//    class TestAPIRoom extends API.Get {
+//
+//        protected void processData(String json) {
 //            try {
 //                JSONArray ja = json.names();
 //                Log.d("API_Objects", ja.toString());
@@ -101,6 +101,6 @@ public class RoomFragment extends Fragment {
 //            } catch (JSONException e) {
 //                e.printStackTrace();
 //            }
-        }
-    }
+//        }
+//    }
 }
