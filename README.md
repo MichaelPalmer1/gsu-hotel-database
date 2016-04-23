@@ -14,6 +14,10 @@ To get the material design icons locally:
 npm install material-design-icons
 ```
 
+### To Do
+- [ ] Report
+- [ ] Volumetrics
+
 [home]: resources/Home.png
 [roomtypes]: resources/RoomTypes.png
 [roominfo]: resources/RoomInfo.png
