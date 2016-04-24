@@ -22,12 +22,9 @@ public class EmployeeStatsRecyclerViewAdapter extends
         RecyclerView.Adapter<EmployeeStatsRecyclerViewAdapter.ViewHolder> {
 
     private final List<EmployeeStat> mValues;
-    private final EmployeeStatsFragment.OnListFragmentInteractionListener mListener;
 
-    public EmployeeStatsRecyclerViewAdapter(List<EmployeeStat> items,
-                                            EmployeeStatsFragment.OnListFragmentInteractionListener listener) {
+    public EmployeeStatsRecyclerViewAdapter(List<EmployeeStat> items) {
         mValues = items;
-        mListener = listener;
     }
 
     @Override

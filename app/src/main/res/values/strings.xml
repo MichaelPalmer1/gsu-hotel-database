@@ -10,6 +10,7 @@
     <string name="nav_guests">Guests</string>
     <string name="nav_employees">Employees</string>
     <string name="backdrop_description">Parallax image</string>
+    <string name="nav_employee_stats">Employee Stats</string>
 
     <!-- Home -->
     <string name="city_state_zip">%1$s, %2$s %3$d</string>
