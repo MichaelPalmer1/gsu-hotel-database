@@ -8,10 +8,14 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import com.kittymcfluffums.hotel.API;
 import com.kittymcfluffums.hotel.Constants;
 import com.kittymcfluffums.hotel.R;
+
+import org.json.JSONArray;
+import org.json.JSONException;
 
 import java.util.Locale;
 
@@ -23,7 +27,6 @@ public class ReservationGuestInfoDialog extends DialogFragment implements View.O
     private EditText first_name, middle_name, last_name, email, phone;
     private int room_number;
     private String date_from, date_to;
-//    private APIReserve api;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -56,48 +59,47 @@ public class ReservationGuestInfoDialog extends DialogFragment implements View.O
             APIReserve1 apiReserve1 = new APIReserve1();
 
             // Insert into room usage
-            sql = String.format(Locale.US, "{\"query\": \"" +
-                    "INSERT INTO `Room_Usage` VALUES(%d, %d, '%s', '%s');" +
-                    "\"}", Constants.HOTEL_ID, room_number, date_from, date_to);
+            sql = API.buildQuery(String.format(Locale.US,
+                    "INSERT INTO `Room_Usage` VALUES(%d, %d, '%s', '%s');",
+                    Constants.HOTEL_ID, room_number, date_from, date_to));
             Log.d("QUERY", sql);
             apiReserve1.execute(Constants.API_QUERY_URL, sql);
 
             // Insert into reservation
             APIReserve2 apiReserve2 = new APIReserve2();
-            sql = String.format(Locale.US, "{\"query\": \"" +
-                    "INSERT INTO `Reservation` " +
-                    "VALUES(NULL,%d,%d,'%s','%s','%s',0);" +
-                    "\"}",
-                    Constants.HOTEL_ID, room_number, date_from, date_from, date_to);
+            sql = API.buildQuery(String.format(Locale.US,
+                    "INSERT INTO `Reservation` VALUES(NULL,%d,%d,'%s','%s','%s',0);",
+                    Constants.HOTEL_ID, room_number, date_from, date_from, date_to));
             Log.d("QUERY", sql);
             apiReserve2.execute(Constants.API_QUERY_URL, sql);
 
             // Insert into guest
             APIReserve3 apiReserve3 = new APIReserve3();
-            sql = String.format(Locale.US, "{\"query\": \"" +
-                    "INSERT INTO `Guest` " +
-                    "VALUES(%d,NULL,'%s','%s','%s','%s','%s');" +
-                    "\"}",
-                    Constants.HOTEL_ID,
-                    first_name.getText().toString(),
-                    middle_name.getText().toString(),
-                    last_name.getText().toString(),
-                    email.getText().toString(),
-                    phone.getText().toString());
+            sql = API.buildQuery(String.format(Locale.US,
+                    "INSERT INTO `Guest` VALUES(%d,NULL,'%s','%s','%s','%s','%s');",
+                    Constants.HOTEL_ID, first_name.getText().toString(),
+                    middle_name.getText().toString(), last_name.getText().toString(),
+                    email.getText().toString(), phone.getText().toString()));
             Log.d("QUERY", sql);
             apiReserve3.execute(Constants.API_QUERY_URL, sql);
 
             // Get last insert
             APIReserve4 apiReserve4 = new APIReserve4();
-            sql = String.format(Locale.US, "{\"query\": \"" +
+            sql = API.buildQuery(String.format(Locale.US,
                     "INSERT INTO `Reservation_Guest` " +
                     "VALUES(%d, (SELECT MAX(reservation_id) FROM Reservation), " +
-                    "(SELECT MAX(guest_id) FROM Guest));" +
-                    "\"}", Constants.HOTEL_ID);
+                    "(SELECT MAX(guest_id) FROM Guest));", Constants.HOTEL_ID));
             Log.d("QUERY", sql);
             apiReserve4.execute(Constants.API_QUERY_URL, sql);
 
+            // Close the dialog
             this.dismiss();
+
+            // Output the reservation id
+            APIReserve5 apiReserve5 = new APIReserve5();
+            sql = API.buildQuery("SELECT MAX(reservation_id) AS id FROM Reservation;");
+            Log.d("QUERY", sql);
+            apiReserve5.execute(Constants.API_QUERY_URL, sql);
         }
     }
 
@@ -109,10 +111,21 @@ public class ReservationGuestInfoDialog extends DialogFragment implements View.O
     }
     class APIReserve2 extends APIReserve1 {}
     class APIReserve3 extends APIReserve1 {}
-    class APIReserve4 extends APIReserve1 {
+    class APIReserve4 extends APIReserve1 {}
+    class APIReserve5 extends APIReserve1 {
         @Override
         protected void processData(String json) {
-
+            try {
+                int reservation_id = new JSONArray(json).getJSONObject(0).getInt("id");
+//                Toast.makeText(
+//                        getActivity(),
+//                        String.format(Locale.US, "Reservation #%d successful", reservation_id),
+//                        Toast.LENGTH_LONG
+//                ).show();
+                Log.d("RESERVATION", String.valueOf(reservation_id));
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
         }
     }
 }

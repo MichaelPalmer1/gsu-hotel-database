@@ -47,12 +47,11 @@ public class RoomInfoDialog extends DialogFragment {
             recyclerView.setLayoutManager(new LinearLayoutManager(context));
         }
 
-        String sql = String.format(Locale.US, "{\"query\": \"" +
-                "SELECT `room_number` FROM `Rooms` " +
-                "WHERE `room_type_id` = %d AND room_number NOT IN (" +
-                "SELECT `room_number` FROM `Room_Usage` " +
-                "WHERE `date_to` > '%s' AND `date_from` < '%s');\"}",
-                room_type_id, date_from, date_to);
+        String sql = API.buildQuery(String.format(Locale.US,
+                "SELECT `room_number` FROM `Rooms` WHERE `room_type_id` = %d AND " +
+                        "room_number NOT IN (SELECT `room_number` FROM `Room_Usage` " +
+                        "WHERE `date_to` > '%s' AND `date_from` < '%s');",
+                room_type_id, date_from, date_to));
 
         APIRoom api = new APIRoom();
         api.execute(Constants.API_QUERY_URL, sql);

@@ -15,6 +15,10 @@ import java.net.URL;
 import java.util.Locale;
 
 public class API {
+    public static String buildQuery(String text) {
+        return String.format(Locale.US, "{\"query\":\"%s\"}", text);
+    }
+
     public static abstract class Get extends AsyncTask<String, Void, String> {
         protected abstract void processData(String data);
 

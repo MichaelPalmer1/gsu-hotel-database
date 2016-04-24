@@ -49,12 +49,12 @@ public class ReservationRoomTypeDialog extends DialogFragment {
             recyclerView.setLayoutManager(new LinearLayoutManager(context));
         }
 
-        String sql = String.format(Locale.US, "{\"query\": \"" +
+        String sql = API.buildQuery(String.format(Locale.US,
                 "SELECT DISTINCT `Room_Types`.* FROM `Rooms` " +
                 "JOIN `Room_Types` ON `Room_Types`.`room_type_id` = `Rooms`.`room_type_id` " +
                 "WHERE room_number NOT IN (SELECT `room_number` FROM `Room_Usage` " +
                 "WHERE `date_to` > '%s' AND `date_from` < '%s') " +
-                "AND `max_guests` >= %d;\"}", date_from, date_to, guests);
+                "AND `max_guests` >= %d;", date_from, date_to, guests));
 
         Log.d("QUERY", sql);
 
