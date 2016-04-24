@@ -89,7 +89,7 @@ public class HomeFragment extends Fragment {
             try {
                 JSONArray jsonArray = new JSONArray(json);
                 for (int i = 0; i < jsonArray.length(); i++) {
-                    if (jsonArray.getJSONObject(i).getString("hotel_id").equals("main")) {
+                    if (jsonArray.getJSONObject(i).getInt("hotel_id") == Constants.HOTEL_ID) {
                         JSONObject hotel = jsonArray.getJSONObject(i);
                         hotel_name.setText(hotel.getString("name"));
                         hotel_address.setText(hotel.getString("address"));

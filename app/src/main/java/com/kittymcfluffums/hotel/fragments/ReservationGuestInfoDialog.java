@@ -57,27 +57,28 @@ public class ReservationGuestInfoDialog extends DialogFragment implements View.O
 
             // Insert into room usage
             sql = String.format(Locale.US, "{\"query\": \"" +
-                    "INSERT INTO `Room_Usage` VALUES(%d, 'main', '%s', '%s');" +
-                    "\"}", room_number, date_from, date_to);
+                    "INSERT INTO `Room_Usage` VALUES(%d, %d, '%s', '%s');" +
+                    "\"}", Constants.HOTEL_ID, room_number, date_from, date_to);
             Log.d("QUERY", sql);
             apiReserve1.execute(Constants.API_QUERY_URL, sql);
 
             // Insert into reservation
             APIReserve2 apiReserve2 = new APIReserve2();
             sql = String.format(Locale.US, "{\"query\": \"" +
-                    "INSERT INTO `Reservation`(`reservation_start_date`,`reservation_end_date`," +
-                    "`date_from`,`room_number`,`hotel_id`) VALUES('%s', '%s', '%s', %d, 'main');" +
+                    "INSERT INTO `Reservation` " +
+                    "VALUES(NULL,%d,%d,'%s','%s','%s',0);" +
                     "\"}",
-                    date_from, date_to, date_from, room_number);
+                    Constants.HOTEL_ID, room_number, date_from, date_from, date_to);
             Log.d("QUERY", sql);
             apiReserve2.execute(Constants.API_QUERY_URL, sql);
 
             // Insert into guest
             APIReserve3 apiReserve3 = new APIReserve3();
             sql = String.format(Locale.US, "{\"query\": \"" +
-                    "INSERT INTO `Guest`(`hotel_id`,`first_name`,`middle_name`,`last_name`," +
-                    "`email`,`phone_number`) VALUES('main', '%s', '%s', '%s', '%s', '%s');" +
+                    "INSERT INTO `Guest` " +
+                    "VALUES(%d,NULL,'%s','%s','%s','%s','%s');" +
                     "\"}",
+                    Constants.HOTEL_ID,
                     first_name.getText().toString(),
                     middle_name.getText().toString(),
                     last_name.getText().toString(),
@@ -88,10 +89,11 @@ public class ReservationGuestInfoDialog extends DialogFragment implements View.O
 
             // Get last insert
             APIReserve4 apiReserve4 = new APIReserve4();
-            sql = "{\"query\": \"" +
-                    "INSERT INTO `Reservation_Guest` VALUES((SELECT MAX(reservation_id) " +
-                    "FROM Reservation), (SELECT MAX(guest_id) FROM Guest), 'main');" +
-                    "\"}";
+            sql = String.format(Locale.US, "{\"query\": \"" +
+                    "INSERT INTO `Reservation_Guest` " +
+                    "VALUES(%d, (SELECT MAX(reservation_id) FROM Reservation), " +
+                    "(SELECT MAX(guest_id) FROM Guest));" +
+                    "\"}", Constants.HOTEL_ID);
             Log.d("QUERY", sql);
             apiReserve4.execute(Constants.API_QUERY_URL, sql);
 

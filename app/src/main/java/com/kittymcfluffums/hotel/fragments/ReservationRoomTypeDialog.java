@@ -53,7 +53,7 @@ public class ReservationRoomTypeDialog extends DialogFragment {
                 "SELECT DISTINCT `Room_Types`.* FROM `Rooms` " +
                 "JOIN `Room_Types` ON `Room_Types`.`room_type_id` = `Rooms`.`room_type_id` " +
                 "WHERE room_number NOT IN (SELECT `room_number` FROM `Room_Usage` " +
-                "WHERE `date_to` >= '%s' AND `date_from` <= '%s') " +
+                "WHERE `date_to` > '%s' AND `date_from` < '%s') " +
                 "AND `max_guests` >= %d;\"}", date_from, date_to, guests);
 
         Log.d("QUERY", sql);
