@@ -51,16 +51,16 @@ public class RoomRecyclerViewAdapter extends
 //                }
 //            }
 //        });
-        Button learn_more = (Button) holder.mView.findViewById(R.id.btn_learn_more);
-        learn_more.setOnClickListener(new View.OnClickListener() {
-
-            @Override
-            public void onClick(View v) {
-                if (mListener != null) {
-                    mListener.onListFragmentInteraction(holder.mItem);
-                }
-            }
-        });
+//        Button learn_more = (Button) holder.mView.findViewById(R.id.btn_learn_more);
+//        learn_more.setOnClickListener(new View.OnClickListener() {
+//
+//            @Override
+//            public void onClick(View v) {
+//                if (mListener != null) {
+//                    mListener.onListFragmentInteraction(holder.mItem);
+//                }
+//            }
+//        });
     }
 
     @Override
