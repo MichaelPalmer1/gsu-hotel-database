@@ -55,7 +55,6 @@ public class ReservationsFragment extends Fragment
         guest_count.setAdapter(adapter);
 
         Button btn_search = (Button) view.findViewById(R.id.btn_reservation_search);
-        btn_search.setOnClickListener(this);
         btn_search.setOnClickListener(new View.OnClickListener() {
 
             @Override
@@ -96,15 +95,6 @@ public class ReservationsFragment extends Fragment
                 break;
             case R.id.date_to:
                 createDatePicker(v);
-                break;
-            case R.id.btn_reservation_search:
-                Bundle args = new Bundle();
-                args.putString("date_from", date_from.getText().toString());
-                args.putString("date_to", date_to.getText().toString());
-                args.putInt("guests", Integer.parseInt(guest_count.getSelectedItem().toString()));
-                ReservationRoomTypeDialog dialog = new ReservationRoomTypeDialog();
-                dialog.setArguments(args);
-                dialog.show(getActivity().getSupportFragmentManager(), "ReservationRoomTypeDialog");
                 break;
         }
     }
