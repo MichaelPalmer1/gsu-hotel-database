@@ -38,9 +38,9 @@ public class RoomRecyclerViewAdapter extends
     @Override
     public void onBindViewHolder(final ViewHolder holder, int position) {
         holder.mItem = mValues.get(position);
-        holder.mIdView.setText(mValues.get(position).getRoomType());
-        holder.mImageView.setImageResource(mValues.get(position).getRoomPicResource());
-        holder.mContentView.setText(mValues.get(position).getRoomDesc());
+        holder.mIdView.setText(holder.mItem.getRoomType());
+        holder.mImageView.setImageResource(holder.mItem.getRoomPicResource());
+        holder.mContentView.setText(holder.mItem.getRoomDesc());
 //        holder.mView.setOnClickListener(new View.OnClickListener() {
 //            @Override
 //            public void onClick(View v) {
