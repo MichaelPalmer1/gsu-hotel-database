@@ -23,7 +23,7 @@
 
     <!-- Guests -->
     <string name="hint_name">John H. Doe</string>
-    <string name="hint_phone">123–456–7890</string>
+    <string name="hint_phone">123-456-7890</string>
     <string name="hint_email">email@example.com</string>
 
     <!-- Employee -->
@@ -46,6 +46,7 @@
     <string name="action_select">Select</string>
     <string name="guests">Guests</string>
 
+    <!-- Number of guests -->
     <string-array name="guest_count">
         <item>1</item>
         <item>2</item>
