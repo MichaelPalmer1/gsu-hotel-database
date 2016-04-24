@@ -32,4 +32,8 @@
     <string name="hint_age">Age</string>
     <string name="hint_date">Date</string>
     <string name="hint_salary">Salary</string>
+
+    <!-- Employee Stats -->
+    <string name="hint_metric">Metric</string>
+    <string name="hint_metric_value">Metric Value</string>
 </resources>
