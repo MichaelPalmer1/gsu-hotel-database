@@ -59,6 +59,27 @@ public class ReservationsFragment extends Fragment
             @Override
             public void onClick(View v) {
                 if (mListener != null) {
+                    boolean has_error = false;
+                    if (date_from.getText().toString().equals("")) {
+                        date_from.setHint("Date From is required");
+                        date_from.setError("Date From is required");
+                        has_error = true;
+                    } else {
+                        date_from.setError(null);
+                    }
+
+                    if (date_to.getText().toString().equals("")) {
+                        date_to.setHint("Date To is required");
+                        date_to.setError("Date To is required");
+                        has_error = true;
+                    } else {
+                        date_to.setError(null);
+                    }
+
+                    if (has_error) {
+                        return;
+                    }
+
                     mListener.onReservationSearch(
                             date_from.getText().toString(),date_to.getText().toString(),
                             Integer.parseInt(guest_count.getSelectedItem().toString()));
