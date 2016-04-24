@@ -18,7 +18,7 @@ public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener,
         HomeFragment.OnFragmentInteractionListener,
         RoomFragment.OnListFragmentInteractionListener,
-        ReservationsFragment.OnFragmentInteractionListener,
+        ReservationsFragment.OnReservationSearchListener,
         GuestFragment.OnListFragmentInteractionListener,
         EmployeeFragment.OnListFragmentInteractionListener,
         ReservationRoomTypeDialog.OnRoomTypeSelectedListener,
@@ -26,7 +26,7 @@ public class MainActivity extends AppCompatActivity
 
     private CollapsingToolbarLayout collapsingToolbar;
     private RoomInfoDialog roomInfoDialog;
-    private ReservationGuestInfoDialog reservationGuestInfoDialog;
+    private ReservationRoomTypeDialog reservationRoomTypeDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -138,7 +138,19 @@ public class MainActivity extends AppCompatActivity
     }
 
     @Override
+    public void onReservationSearch(String date_from, String date_to, int guests) {
+        Bundle args = new Bundle();
+        args.putString("date_from", date_from);
+        args.putString("date_to", date_to);
+        args.putInt("guests", guests);
+        reservationRoomTypeDialog = new ReservationRoomTypeDialog();
+        reservationRoomTypeDialog.setArguments(args);
+        reservationRoomTypeDialog.show(getSupportFragmentManager(), "ReservationRoomTypeDialog");
+    }
+
+    @Override
     public void onRoomTypeSelected(Room room, String date_from, String date_to) {
+        reservationRoomTypeDialog.dismiss();
         Bundle args = new Bundle();
         args.putString("room_type", room.getRoomType());
         args.putInt("room_type_id", room.getRoomTypeId());
@@ -156,7 +168,7 @@ public class MainActivity extends AppCompatActivity
         args.putInt("room_number", room_number);
         args.putString("date_from", date_from);
         args.putString("date_to", date_to);
-        reservationGuestInfoDialog = new ReservationGuestInfoDialog();
+        ReservationGuestInfoDialog reservationGuestInfoDialog = new ReservationGuestInfoDialog();
         reservationGuestInfoDialog.setArguments(args);
         reservationGuestInfoDialog.show(getSupportFragmentManager(), "ReservationGuestInfoDialog");
     }

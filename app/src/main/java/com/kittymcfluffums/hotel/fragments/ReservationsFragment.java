@@ -30,7 +30,7 @@ import java.util.Locale;
 public class ReservationsFragment extends Fragment
         implements View.OnClickListener, DatePickerDialog.OnDateSetListener {
 
-    private OnFragmentInteractionListener mListener;
+    private OnReservationSearchListener mListener;
     private EditText date_view, date_from, date_to;
     private Spinner guest_count;
     private SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.US);
@@ -56,6 +56,17 @@ public class ReservationsFragment extends Fragment
 
         Button btn_search = (Button) view.findViewById(R.id.btn_reservation_search);
         btn_search.setOnClickListener(this);
+        btn_search.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+                if (mListener != null) {
+                    mListener.onReservationSearch(
+                            date_from.getText().toString(),date_to.getText().toString(),
+                            Integer.parseInt(guest_count.getSelectedItem().toString()));
+                }
+            }
+        });
 
         return view;
     }
@@ -63,11 +74,11 @@ public class ReservationsFragment extends Fragment
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-        if (context instanceof OnFragmentInteractionListener) {
-            mListener = (OnFragmentInteractionListener) context;
+        if (context instanceof OnReservationSearchListener) {
+            mListener = (OnReservationSearchListener) context;
         } else {
             throw new RuntimeException(context.toString()
-                    + " must implement OnFragmentInteractionListener");
+                    + " must implement OnReservationSearchListener");
         }
     }
 
@@ -135,7 +146,7 @@ public class ReservationsFragment extends Fragment
      * http://developer.android.com/training/basics/fragments/communicating.html
      * for more information.
      */
-    public interface OnFragmentInteractionListener {
-        void onFragmentInteraction(Object object);
+    public interface OnReservationSearchListener {
+        void onReservationSearch(String date_from, String date_to, int guests);
     }
 }
