@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,7 +13,8 @@ import android.view.ViewGroup;
 import com.kittymcfluffums.hotel.API;
 import com.kittymcfluffums.hotel.Constants;
 import com.kittymcfluffums.hotel.R;
-import com.kittymcfluffums.hotel.RoomInfoRecyclerViewAdapter;
+import com.kittymcfluffums.hotel.ReservationRoomTypeRecyclerViewAdapter;
+import com.kittymcfluffums.hotel.Room;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -24,22 +26,22 @@ import java.util.Locale;
 /**
  * Fragment for the rooms screen.
  */
-public class RoomInfoDialog extends DialogFragment {
-    private static ArrayList<Integer> rooms = new ArrayList<>();
+public class ReservationRoomTypeDialog extends DialogFragment {
+    private static ArrayList<Room> rooms = new ArrayList<>();
     private RecyclerView recyclerView;
-    protected OnRoomSelectedListener mListener;
+    protected OnRoomTypeSelectedListener mListener;
     private String date_from, date_to;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View rootView = inflater.inflate(R.layout.dialog_room_info_list, container, false);
+        View rootView = inflater
+                .inflate(R.layout.dialog_reservation_room_type_list, container, false);
 
-        String room_type = getArguments().getString("room_type");
         date_from = getArguments().getString("date_from");
         date_to = getArguments().getString("date_to");
-        int room_type_id = getArguments().getInt("room_type_id");
-        super.getDialog().setTitle(room_type);
+        int guests = getArguments().getInt("guests");
+        super.getDialog().setTitle("Select a room type");
 
         if (rootView instanceof RecyclerView) {
             Context context = rootView.getContext();
@@ -48,12 +50,15 @@ public class RoomInfoDialog extends DialogFragment {
         }
 
         String sql = API.buildQuery(String.format(Locale.US,
-                "SELECT `room_number` FROM `Rooms` WHERE `room_type_id` = %d AND " +
-                        "room_number NOT IN (SELECT `room_number` FROM `Room_Usage` " +
-                        "WHERE `date_to` > '%s' AND `date_from` < '%s');",
-                room_type_id, date_from, date_to));
+                "SELECT DISTINCT `Room_Types`.* FROM `Rooms` " +
+                "JOIN `Room_Types` ON `Room_Types`.`room_type_id` = `Rooms`.`room_type_id` " +
+                "WHERE room_number NOT IN (SELECT `room_number` FROM `Room_Usage` " +
+                "WHERE `date_to` > '%s' AND `date_from` < '%s') " +
+                "AND `max_guests` >= %d;", date_from, date_to, guests));
 
-        APIRoom api = new APIRoom();
+        Log.d("QUERY", sql);
+
+        GetRoomTypes api = new GetRoomTypes();
         api.execute(Constants.API_QUERY_URL, sql);
 
         return rootView;
@@ -62,11 +67,11 @@ public class RoomInfoDialog extends DialogFragment {
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-        if (context instanceof OnRoomSelectedListener) {
-            mListener = (OnRoomSelectedListener) context;
+        if (context instanceof OnRoomTypeSelectedListener) {
+            mListener = (OnRoomTypeSelectedListener) context;
         } else {
             throw new RuntimeException(context.toString()
-                    + " must implement OnRoomSelectedListener");
+                    + " must implement OnRoomTypeSelectedListener");
         }
     }
 
@@ -76,24 +81,30 @@ public class RoomInfoDialog extends DialogFragment {
         mListener = null;
     }
 
-    class APIRoom extends API.Post {
+    class GetRoomTypes extends API.Post {
         protected void processData(String json) {
             try {
                 JSONArray jsonArray = new JSONArray(json);
                 rooms.clear();
                 for (int i = 0; i < jsonArray.length(); i++) {
                     JSONObject row = jsonArray.getJSONObject(i);
-                    rooms.add(row.getInt("room_number"));
+                    rooms.add(new Room(R.drawable.hotel,
+                            row.getString("description"),
+                            String.format(Locale.US, "$%.2f per night",
+                                    row.getDouble("nightly_rate")),
+                            row.getInt("room_type_id")
+                    ));
                 }
-                recyclerView.setAdapter(new RoomInfoRecyclerViewAdapter(rooms, mListener,
-                        date_from, date_to));
+                recyclerView.setAdapter(
+                        new ReservationRoomTypeRecyclerViewAdapter(rooms, mListener,
+                                date_from, date_to));
             } catch (JSONException e) {
                 e.printStackTrace();
             }
         }
     }
 
-    public interface OnRoomSelectedListener {
-        void onRoomSelected(int room_number, String date_from, String date_to);
+    public interface OnRoomTypeSelectedListener {
+        void onRoomTypeSelected(Room room, String date_from, String date_to);
     }
 }

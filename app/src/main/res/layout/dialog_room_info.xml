@@ -3,7 +3,7 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:card_view="http://schemas.android.com/apk/res-auto"
     android:id="@+id/card_room_info"
-    android:layout_width="300dp"
+    android:layout_width="290dp"
     android:layout_height="wrap_content"
     card_view:cardUseCompatPadding="true"
     card_view:cardCornerRadius="2dp"
@@ -24,12 +24,13 @@
             android:textAppearance="?android:attr/textAppearanceLarge"
             android:text="Room 1002" />
 
-        <TextView
-            android:id="@+id/room_available"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceMedium"
-            android:text="Available" />
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:id="@+id/btn_select_room"
+            style="@style/Widget.AppCompat.Button.Colored"
+            android:textAllCaps="true"
+            android:text="@string/action_select" />
 
     </LinearLayout>
 

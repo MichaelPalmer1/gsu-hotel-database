@@ -1,22 +1,31 @@
 package com.kittymcfluffums.hotel;
 
-import android.graphics.Color;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.TextView;
 
-import java.util.HashMap;
+import com.kittymcfluffums.hotel.fragments.RoomInfoDialog;
+
 import java.util.List;
+import java.util.Locale;
 
 public class RoomInfoRecyclerViewAdapter extends
         RecyclerView.Adapter<RoomInfoRecyclerViewAdapter.ViewHolder> {
 
-    private final List<HashMap<String, Object>> mValues;
+    private final List<Integer> mValues;
+    private final RoomInfoDialog.OnRoomSelectedListener mListener;
+    private String date_from, date_to;
 
-    public RoomInfoRecyclerViewAdapter(List<HashMap<String, Object>> items) {
+    public RoomInfoRecyclerViewAdapter(List<Integer> items,
+                                       RoomInfoDialog.OnRoomSelectedListener listener,
+                                       String date_from, String date_to) {
         mValues = items;
+        mListener = listener;
+        this.date_from = date_from;
+        this.date_to = date_to;
     }
 
     @Override
@@ -29,14 +38,19 @@ public class RoomInfoRecyclerViewAdapter extends
     @Override
     public void onBindViewHolder(final ViewHolder holder, int position) {
         holder.mItem = mValues.get(position);
-        holder.mIdView.setText(String.format("Room %s", mValues.get(position).get("room_number")));
-        Boolean availability = (Boolean) mValues.get(position).get("is_available");
-        if (availability) {
-            holder.mContentView.setText("Available");
-        } else {
-            holder.mContentView.setText("Unavailable");
-            holder.mContentView.setTextColor(Color.RED);
-        }
+        holder.mIdView.setText(String.format(Locale.US, "Room %d", mValues.get(position)));
+
+        Button btn_select = (Button) holder.mView.findViewById(R.id.btn_select_room);
+        btn_select.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+                if (mListener != null) {
+                    mListener.onRoomSelected(
+                            mValues.get(holder.getAdapterPosition()), date_from, date_to);
+                }
+            }
+        });
     }
 
     @Override
@@ -47,19 +61,12 @@ public class RoomInfoRecyclerViewAdapter extends
     public class ViewHolder extends RecyclerView.ViewHolder {
         public final View mView;
         public final TextView mIdView;
-        public final TextView mContentView;
-        public HashMap<String, Object> mItem;
+        public int mItem;
 
         public ViewHolder(View view) {
             super(view);
             mView = view;
             mIdView = (TextView) view.findViewById(R.id.room_number);
-            mContentView = (TextView) view.findViewById(R.id.room_available);
-        }
-
-        @Override
-        public String toString() {
-            return super.toString() + " '" + mContentView.getText() + "'";
         }
     }
 }

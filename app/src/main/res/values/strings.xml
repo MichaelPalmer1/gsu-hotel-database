@@ -23,7 +23,7 @@
 
     <!-- Guests -->
     <string name="hint_name">John H. Doe</string>
-    <string name="hint_phone">123-456-7890</string>
+    <string name="hint_phone">123–456–7890</string>
     <string name="hint_email">email@example.com</string>
 
     <!-- Employee -->
@@ -36,4 +36,26 @@
     <!-- Employee Stats -->
     <string name="hint_metric">Metric</string>
     <string name="hint_metric_value">Metric Value</string>
+
+    <!-- Reservations -->
+    <string name="from">From</string>
+    <string name="to">To</string>
+    <string name="date_from">Date From</string>
+    <string name="date_to">Date To</string>
+    <string name="action_search">Search</string>
+    <string name="action_select">Select</string>
+    <string name="guests">Guests</string>
+
+    <string-array name="guest_count">
+        <item>1</item>
+        <item>2</item>
+        <item>3</item>
+        <item>4</item>
+        <item>5</item>
+        <item>6</item>
+        <item>7</item>
+        <item>8</item>
+        <item>9</item>
+        <item>10</item>
+    </string-array>
 </resources>
