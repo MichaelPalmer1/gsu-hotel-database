@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:id="@+id/guest_list"
-    android:name="com.kittymcfluffums.hotel.GuestFragment"
+    android:name=".fragments.GuestFragment"
     app:layoutManager="LinearLayoutManager"
     android:scrollbars="vertical"
     tools:context=".fragments.GuestFragment"
