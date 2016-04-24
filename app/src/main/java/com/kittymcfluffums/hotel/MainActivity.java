@@ -12,9 +12,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 
-import com.kittymcfluffums.hotel.dialogs.ReservationGuestInfoDialog;
-import com.kittymcfluffums.hotel.dialogs.ReservationRoomTypeDialog;
-import com.kittymcfluffums.hotel.dialogs.RoomInfoDialog;
+import com.kittymcfluffums.hotel.dialogs.*;
 import com.kittymcfluffums.hotel.fragments.*;
 
 public class MainActivity extends AppCompatActivity
