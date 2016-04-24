@@ -4,11 +4,12 @@ import android.app.DatePickerDialog;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.text.InputType;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.Spinner;
@@ -30,7 +31,8 @@ public class ReservationsFragment extends Fragment
         implements View.OnClickListener, DatePickerDialog.OnDateSetListener {
 
     private OnFragmentInteractionListener mListener;
-    private EditText date_view;
+    private EditText date_view, date_from, date_to;
+    private Spinner guest_count;
     private SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.US);
 
     @Override
@@ -40,26 +42,22 @@ public class ReservationsFragment extends Fragment
         View view = inflater.inflate(R.layout.fragment_reservations, container, false);
 
         // Date pickers
-        EditText date_from = (EditText) view.findViewById(R.id.date_from);
-        EditText date_to = (EditText) view.findViewById(R.id.date_to);
+        date_from = (EditText) view.findViewById(R.id.date_from);
+        date_to = (EditText) view.findViewById(R.id.date_to);
         date_from.setOnClickListener(this);
         date_to.setOnClickListener(this);
 
         // Guest count
-        Spinner guest_count = (Spinner) view.findViewById(R.id.guest_count);
+        guest_count = (Spinner) view.findViewById(R.id.guest_count);
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(getActivity(),
                 R.array.guest_count, android.R.layout.simple_spinner_item);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         guest_count.setAdapter(adapter);
 
-        return view;
-    }
+        Button btn_search = (Button) view.findViewById(R.id.btn_reservation_search);
+        btn_search.setOnClickListener(this);
 
-    // TODO: Implement an action
-    public void onSomeAction(Object object) {
-        if (mListener != null) {
-            mListener.onFragmentInteraction(object);
-        }
+        return view;
     }
 
     @Override
@@ -87,6 +85,15 @@ public class ReservationsFragment extends Fragment
                 break;
             case R.id.date_to:
                 createDatePicker(v);
+                break;
+            case R.id.btn_reservation_search:
+                Bundle args = new Bundle();
+                args.putString("date_from", date_from.getText().toString());
+                args.putString("date_to", date_to.getText().toString());
+                args.putInt("guests", Integer.parseInt(guest_count.getSelectedItem().toString()));
+                ReservationRoomTypeDialog dialog = new ReservationRoomTypeDialog();
+                dialog.setArguments(args);
+                dialog.show(getActivity().getSupportFragmentManager(), "ReservationRoomTypeDialog");
                 break;
         }
     }

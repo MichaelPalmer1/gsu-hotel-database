@@ -39,6 +39,7 @@
     <string name="date_from">Date From</string>
     <string name="date_to">Date To</string>
     <string name="action_search">Search</string>
+    <string name="action_select">Select</string>
     <string name="guests">Guests</string>
 
     <string-array name="guest_count">
@@ -46,5 +47,11 @@
         <item>2</item>
         <item>3</item>
         <item>4</item>
+        <item>5</item>
+        <item>6</item>
+        <item>7</item>
+        <item>8</item>
+        <item>9</item>
+        <item>10</item>
     </string-array>
 </resources>

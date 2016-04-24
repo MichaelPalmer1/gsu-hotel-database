@@ -20,9 +20,13 @@ public class MainActivity extends AppCompatActivity
         RoomFragment.OnListFragmentInteractionListener,
         ReservationsFragment.OnFragmentInteractionListener,
         GuestFragment.OnListFragmentInteractionListener,
-        EmployeeFragment.OnListFragmentInteractionListener {
+        EmployeeFragment.OnListFragmentInteractionListener,
+        ReservationRoomTypeDialog.OnRoomTypeSelectedListener,
+        RoomInfoDialog.OnRoomSelectedListener {
 
     private CollapsingToolbarLayout collapsingToolbar;
+    private RoomInfoDialog roomInfoDialog;
+    private ReservationGuestInfoDialog reservationGuestInfoDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -131,5 +135,29 @@ public class MainActivity extends AppCompatActivity
     @Override
     public void onListFragmentInteraction(Employee employee) {
         // TODO: Implement this
+    }
+
+    @Override
+    public void onRoomTypeSelected(Room room, String date_from, String date_to) {
+        Bundle args = new Bundle();
+        args.putString("room_type", room.getRoomType());
+        args.putInt("room_type_id", room.getRoomTypeId());
+        args.putString("date_from", date_from);
+        args.putString("date_to", date_to);
+        roomInfoDialog = new RoomInfoDialog();
+        roomInfoDialog.setArguments(args);
+        roomInfoDialog.show(getSupportFragmentManager(), "RoomInfoDialog");
+    }
+
+    @Override
+    public void onRoomSelected(int room_number, String date_from, String date_to) {
+        roomInfoDialog.dismiss();
+        Bundle args = new Bundle();
+        args.putInt("room_number", room_number);
+        args.putString("date_from", date_from);
+        args.putString("date_to", date_to);
+        reservationGuestInfoDialog = new ReservationGuestInfoDialog();
+        reservationGuestInfoDialog.setArguments(args);
+        reservationGuestInfoDialog.show(getSupportFragmentManager(), "ReservationGuestInfoDialog");
     }
 }
