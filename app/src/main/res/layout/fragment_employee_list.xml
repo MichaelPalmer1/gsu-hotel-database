@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:id="@+id/employee_list"
-    android:name="com.kittymcfluffums.hotel.EmployeeFragment"
+    android:name=".fragments.EmployeeFragment"
     app:layoutManager="LinearLayoutManager"
     android:scrollbars="vertical"
     tools:context=".fragments.EmployeeFragment"

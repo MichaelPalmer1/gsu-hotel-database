@@ -12,6 +12,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 
+import com.kittymcfluffums.hotel.dialogs.*;
 import com.kittymcfluffums.hotel.fragments.*;
 
 public class MainActivity extends AppCompatActivity

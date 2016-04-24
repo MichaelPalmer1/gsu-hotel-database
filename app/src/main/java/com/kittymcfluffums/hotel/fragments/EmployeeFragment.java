@@ -12,7 +12,7 @@ import android.view.ViewGroup;
 import com.kittymcfluffums.hotel.API;
 import com.kittymcfluffums.hotel.Constants;
 import com.kittymcfluffums.hotel.Employee;
-import com.kittymcfluffums.hotel.EmployeeRecyclerViewAdapter;
+import com.kittymcfluffums.hotel.adapters.EmployeeRecyclerViewAdapter;
 import com.kittymcfluffums.hotel.R;
 
 import org.json.JSONArray;

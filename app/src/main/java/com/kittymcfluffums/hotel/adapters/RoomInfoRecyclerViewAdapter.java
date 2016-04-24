@@ -1,4 +1,4 @@
-package com.kittymcfluffums.hotel;
+package com.kittymcfluffums.hotel.adapters;
 
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -7,7 +7,8 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 
-import com.kittymcfluffums.hotel.fragments.RoomInfoDialog;
+import com.kittymcfluffums.hotel.R;
+import com.kittymcfluffums.hotel.dialogs.RoomInfoDialog;
 
 import java.util.List;
 import java.util.Locale;
