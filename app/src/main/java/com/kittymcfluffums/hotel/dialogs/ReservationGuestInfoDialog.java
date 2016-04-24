@@ -1,4 +1,4 @@
-package com.kittymcfluffums.hotel.fragments;
+package com.kittymcfluffums.hotel.dialogs;
 
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;

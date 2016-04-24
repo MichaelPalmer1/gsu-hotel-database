@@ -13,7 +13,7 @@ import com.kittymcfluffums.hotel.API;
 import com.kittymcfluffums.hotel.Constants;
 import com.kittymcfluffums.hotel.R;
 import com.kittymcfluffums.hotel.Guest;
-import com.kittymcfluffums.hotel.GuestRecyclerViewAdapter;
+import com.kittymcfluffums.hotel.adapters.GuestRecyclerViewAdapter;
 
 import org.json.JSONArray;
 import org.json.JSONException;

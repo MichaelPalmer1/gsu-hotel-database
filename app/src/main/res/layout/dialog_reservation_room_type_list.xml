@@ -8,5 +8,5 @@
     android:id="@+id/reservation_room_type_list"
     app:layoutManager="LinearLayoutManager"
     android:scrollbars="vertical"
-    tools:context=".fragments.ReservationRoomTypeDialog"
+    tools:context=".dialogs.ReservationRoomTypeDialog"
     tools:listitem="@layout/dialog_reservation_room_type" />

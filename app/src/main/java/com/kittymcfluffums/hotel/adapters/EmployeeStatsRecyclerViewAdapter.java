@@ -1,4 +1,4 @@
-package com.kittymcfluffums.hotel;
+package com.kittymcfluffums.hotel.adapters;
 
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -6,6 +6,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.kittymcfluffums.hotel.EmployeeStat;
+import com.kittymcfluffums.hotel.R;
+import com.kittymcfluffums.hotel.Room;
 import com.kittymcfluffums.hotel.fragments.EmployeeStatsFragment;
 import com.kittymcfluffums.hotel.fragments.RoomFragment;
 

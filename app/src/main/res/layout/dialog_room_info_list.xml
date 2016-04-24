@@ -11,5 +11,5 @@
     android:name="com.kittymcfluffums.hotel.RoomInfoDialog"
     app:layoutManager="LinearLayoutManager"
     android:scrollbars="vertical"
-    tools:context=".fragments.RoomInfoDialog"
+    tools:context=".dialogs.RoomInfoDialog"
     tools:listitem="@layout/dialog_room_info" />
