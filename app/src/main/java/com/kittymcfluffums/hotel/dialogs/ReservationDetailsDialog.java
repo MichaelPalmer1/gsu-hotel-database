@@ -127,42 +127,28 @@ public class ReservationDetailsDialog extends DialogFragment implements View.OnC
                     total_cost.setText(String.format(Locale.US,
                             "%.2f", data.getDouble("total_charge")));
                 } else {
-                    // TODO: Error handling
-                    Log.d("RESERVATION", "INVALID RESERVATION");
                     dialog.dismiss();
                     Toast.makeText(getContext(), "Invalid reservation id",
                             Toast.LENGTH_LONG).show();
                 }
-
-                Log.d("RESERVATIONRESULT", json);
             } catch (JSONException e) {
                 e.printStackTrace();
             }
         }
     }
 
-    class APIReservationUpdate extends API.Post {
+    class APILogResult extends API.Post {
         protected void processData(String json) {
-            Log.d("RESERVATIONRESULT", json);
+            Log.d("RESULT", json);
         }
     }
 
-    class APIReservationDeletePayment extends API.Post {
-        protected void processData(String json) {
-            Log.d("RESERVATIONRESULT", json);
-        }
-    }
+    class APIReservationUpdate extends APILogResult {}
 
-    class APIReservationDeleteRoomUsage extends API.Post {
-        protected void processData(String json) {
-            Log.d("RESERVATIONRESULT", json);
-        }
-    }
+    class APIReservationDeletePayment extends APILogResult {}
 
-    class APIReservationDeleteReservation extends API.Post {
-        protected void processData(String json) {
-            Log.d("RESERVATIONRESULT", json);
-        }
-    }
+    class APIReservationDeleteRoomUsage extends APILogResult {}
+
+    class APIReservationDeleteReservation extends APILogResult {}
 
 }
