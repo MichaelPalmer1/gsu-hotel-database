@@ -93,6 +93,9 @@ public class MainActivity extends AppCompatActivity
             case R.id.nav_employees:
                 setFragment(new EmployeeFragment(), R.string.nav_employees);
                 break;
+            case R.id.nav_employee_stats:
+                setFragment(new EmployeeStatsFragment(), R.string.nav_employee_stats);
+                break;
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
