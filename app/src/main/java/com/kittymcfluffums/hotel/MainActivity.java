@@ -10,24 +10,26 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.MenuItem;
+import android.widget.EditText;
 
 import com.kittymcfluffums.hotel.dialogs.*;
 import com.kittymcfluffums.hotel.fragments.*;
 
-public class MainActivity extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener,
-        HomeFragment.OnFragmentInteractionListener,
-        RoomFragment.OnBookClickedListener,
-        ReservationsFragment.OnReservationSearchListener,
-        GuestFragment.OnListFragmentInteractionListener,
-        EmployeeFragment.OnListFragmentInteractionListener,
-        ReservationRoomTypeDialog.OnRoomTypeSelectedListener,
-        RoomInfoDialog.OnRoomSelectedListener {
+import org.json.JSONArray;
+import org.json.JSONException;
+
+import java.util.Locale;
+
+public class MainActivity extends AppCompatActivity implements
+        NavigationView.OnNavigationItemSelectedListener, Listeners {
 
     private CollapsingToolbarLayout collapsingToolbar;
     private RoomInfoDialog roomInfoDialog;
     private ReservationRoomTypeDialog reservationRoomTypeDialog;
+    private ReservationGuestInfoDialog reservationGuestInfoDialog;
+    private int reservation_id;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -117,31 +119,6 @@ public class MainActivity extends AppCompatActivity
     }
 
     @Override
-    public void onFragmentInteraction(Object object) {
-        // TODO: Implement this
-    }
-
-//    @Override
-//    public void onListFragmentInteraction(Room room) {
-//        Bundle args = new Bundle();
-//        args.putString("room_type", room.getRoomType());
-//        args.putInt("room_type_id", room.getRoomTypeId());
-//        RoomInfoDialog dialog = new RoomInfoDialog();
-//        dialog.setArguments(args);
-//        dialog.show(getSupportFragmentManager(), "RoomInfoDialog");
-//    }
-
-    @Override
-    public void onListFragmentInteraction(Guest guest) {
-        // TODO: Implement this
-    }
-
-    @Override
-    public void onListFragmentInteraction(Employee employee) {
-        // TODO: Implement this
-    }
-
-    @Override
     public void onReservationSearch(String date_from, String date_to, int guests) {
         Bundle args = new Bundle();
         args.putString("date_from", date_from);
@@ -150,6 +127,102 @@ public class MainActivity extends AppCompatActivity
         reservationRoomTypeDialog = new ReservationRoomTypeDialog();
         reservationRoomTypeDialog.setArguments(args);
         reservationRoomTypeDialog.show(getSupportFragmentManager(), "ReservationRoomTypeDialog");
+    }
+
+    @Override
+    public void onGuestInfoSubmitted(int room_number, String date_from, String date_to,
+                                     EditText first_name, EditText middle_name, EditText last_name,
+                                     EditText email, EditText phone) {
+        boolean has_error = false;
+        if (first_name.getText().toString().equals("")) {
+            first_name.setHint("First Name is required");
+            first_name.setError("First Name is required");
+            has_error = true;
+        } else {
+            first_name.setError(null);
+        }
+
+        if (middle_name.getText().toString().equals("")) {
+            middle_name.setHint("Middle Name is required");
+            middle_name.setError("Middle Name is required");
+            has_error = true;
+        } else {
+            middle_name.setError(null);
+        }
+
+        if (last_name.getText().toString().equals("")) {
+            last_name.setHint("Last Name is required");
+            last_name.setError("Last Name is required");
+            has_error = true;
+        } else {
+            last_name.setError(null);
+        }
+
+        if (email.getText().toString().equals("")) {
+            email.setHint("Email is required");
+            email.setError("Email is required");
+            has_error = true;
+        } else {
+            email.setError(null);
+        }
+
+        if (phone.getText().toString().equals("")) {
+            phone.setHint("Phone is required");
+            phone.setError("Phone is required");
+            has_error = true;
+        } else {
+            phone.setError(null);
+        }
+
+        if (has_error) {
+            return;
+        }
+
+        String sql;
+        APIReserve1 apiReserve1 = new APIReserve1();
+
+        // Insert into room usage
+        sql = API.buildQuery(String.format(Locale.US,
+                "INSERT INTO `Room_Usage` VALUES(%d, %d, '%s', '%s');",
+                Constants.HOTEL_ID, room_number, date_from, date_to));
+        Log.d("QUERY", sql);
+        apiReserve1.execute(Constants.API_QUERY_URL, sql);
+
+        // Insert into reservation
+        APIReserve2 apiReserve2 = new APIReserve2();
+        sql = API.buildQuery(String.format(Locale.US,
+                "INSERT INTO `Reservation` VALUES(NULL,%d,%d,'%s','%s','%s',0);",
+                Constants.HOTEL_ID, room_number, date_from, date_from, date_to));
+        Log.d("QUERY", sql);
+        apiReserve2.execute(Constants.API_QUERY_URL, sql);
+
+        // Insert into guest
+        APIReserve3 apiReserve3 = new APIReserve3();
+        sql = API.buildQuery(String.format(Locale.US,
+                "INSERT INTO `Guest` VALUES(%d,NULL,'%s','%s','%s','%s','%s');",
+                Constants.HOTEL_ID, first_name.getText().toString(),
+                middle_name.getText().toString(), last_name.getText().toString(),
+                email.getText().toString(), phone.getText().toString()));
+        Log.d("QUERY", sql);
+        apiReserve3.execute(Constants.API_QUERY_URL, sql);
+
+        // Get last insert
+        APIReserve4 apiReserve4 = new APIReserve4();
+        sql = API.buildQuery(String.format(Locale.US,
+                "INSERT INTO `Reservation_Guest` " +
+                        "VALUES(%d, (SELECT MAX(reservation_id) FROM Reservation), " +
+                        "(SELECT MAX(guest_id) FROM Guest));", Constants.HOTEL_ID));
+        Log.d("QUERY", sql);
+        apiReserve4.execute(Constants.API_QUERY_URL, sql);
+
+        // Close the dialog
+        reservationGuestInfoDialog.dismiss();
+
+        // Output the reservation id
+        APIReserve5 apiReserve5 = new APIReserve5();
+        sql = API.buildQuery("SELECT MAX(reservation_id) AS id FROM Reservation;");
+        Log.d("QUERY", sql);
+        apiReserve5.execute(Constants.API_QUERY_URL, sql);
     }
 
     @Override
@@ -172,7 +245,7 @@ public class MainActivity extends AppCompatActivity
         args.putInt("room_number", room_number);
         args.putString("date_from", date_from);
         args.putString("date_to", date_to);
-        ReservationGuestInfoDialog reservationGuestInfoDialog = new ReservationGuestInfoDialog();
+        reservationGuestInfoDialog = new ReservationGuestInfoDialog();
         reservationGuestInfoDialog.setArguments(args);
         reservationGuestInfoDialog.show(getSupportFragmentManager(), "ReservationGuestInfoDialog");
     }
@@ -180,5 +253,31 @@ public class MainActivity extends AppCompatActivity
     @Override
     public void onBookClicked() {
         setFragment(new ReservationsFragment(), R.string.nav_reservations);
+    }
+
+    class APIReserve1 extends API.Post {
+        protected void processData(String json) {
+            // Don't do anything
+            Log.d("RESULT", json);
+        }
+    }
+    class APIReserve2 extends APIReserve1 {}
+    class APIReserve3 extends APIReserve1 {}
+    class APIReserve4 extends APIReserve1 {}
+    class APIReserve5 extends APIReserve1 {
+        @Override
+        protected void processData(String json) {
+            try {
+                reservation_id = new JSONArray(json).getJSONObject(0).getInt("id");
+//                Toast.makeText(
+//                        getActivity(),
+//                        String.format(Locale.US, "Reservation #%d successful", reservation_id),
+//                        Toast.LENGTH_LONG
+//                ).show();
+                Log.d("RESERVATION", String.valueOf(reservation_id));
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+        }
     }
 }

@@ -8,9 +8,9 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.kittymcfluffums.hotel.Listeners;
 import com.kittymcfluffums.hotel.R;
 import com.kittymcfluffums.hotel.Room;
-import com.kittymcfluffums.hotel.dialogs.ReservationRoomTypeDialog;
 
 import java.util.List;
 
@@ -18,11 +18,11 @@ public class ReservationRoomTypeRecyclerViewAdapter extends
         RecyclerView.Adapter<ReservationRoomTypeRecyclerViewAdapter.ViewHolder> {
 
     private final List<Room> mValues;
-    private final ReservationRoomTypeDialog.OnRoomTypeSelectedListener mListener;
+    private final Listeners mListener;
     private String date_from, date_to;
 
     public ReservationRoomTypeRecyclerViewAdapter(List<Room> items,
-                              ReservationRoomTypeDialog.OnRoomTypeSelectedListener listener,
+                              Listeners listener,
                                                   String date_from, String date_to) {
         mValues = items;
         mListener = listener;

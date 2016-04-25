@@ -11,6 +11,7 @@ import android.view.ViewGroup;
 
 import com.kittymcfluffums.hotel.API;
 import com.kittymcfluffums.hotel.Constants;
+import com.kittymcfluffums.hotel.Listeners;
 import com.kittymcfluffums.hotel.R;
 import com.kittymcfluffums.hotel.adapters.RoomInfoRecyclerViewAdapter;
 
@@ -27,7 +28,7 @@ import java.util.Locale;
 public class RoomInfoDialog extends DialogFragment {
     private static ArrayList<Integer> rooms = new ArrayList<>();
     private RecyclerView recyclerView;
-    protected OnRoomSelectedListener mListener;
+    protected Listeners mListener;
     private String date_from, date_to;
 
     @Override
@@ -62,11 +63,11 @@ public class RoomInfoDialog extends DialogFragment {
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-        if (context instanceof OnRoomSelectedListener) {
-            mListener = (OnRoomSelectedListener) context;
+        if (context instanceof Listeners) {
+            mListener = (Listeners) context;
         } else {
             throw new RuntimeException(context.toString()
-                    + " must implement OnRoomSelectedListener");
+                    + " must implement Listeners");
         }
     }
 
@@ -91,9 +92,5 @@ public class RoomInfoDialog extends DialogFragment {
                 e.printStackTrace();
             }
         }
-    }
-
-    public interface OnRoomSelectedListener {
-        void onRoomSelected(int room_number, String date_from, String date_to);
     }
 }

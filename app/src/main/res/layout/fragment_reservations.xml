@@ -8,6 +8,13 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:textStyle="bold"
+        android:text="@string/make_reservation" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:text="@string/date_from" />
 
     <EditText
@@ -47,6 +54,30 @@
         android:layout_marginTop="@dimen/activity_horizontal_margin"
         android:id="@+id/btn_reservation_search"
         android:text="@string/action_search"
+        style="@style/Widget.AppCompat.Button.Colored" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="32dp"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:textStyle="bold"
+        android:text="@string/lookup_reservation" />
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/reservation_id"
+        android:hint="@string/reservation_number"
+        android:maxLines="1"
+        android:inputType="number" />
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/activity_horizontal_margin"
+        android:id="@+id/btn_reservation_lookup"
+        android:text="@string/action_lookup"
         style="@style/Widget.AppCompat.Button.Colored" />
 
 </LinearLayout>

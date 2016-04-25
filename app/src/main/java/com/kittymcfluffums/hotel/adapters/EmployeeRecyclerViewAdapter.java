@@ -8,26 +8,20 @@ import android.widget.TextView;
 
 import com.kittymcfluffums.hotel.Employee;
 import com.kittymcfluffums.hotel.R;
-import com.kittymcfluffums.hotel.fragments.EmployeeFragment;
 
 import java.util.List;
 import java.util.Locale;
 
 /**
- * {@link RecyclerView.Adapter} that can display a {@link Employee} and makes a call to the
- * specified {@link EmployeeFragment.OnListFragmentInteractionListener}.
+ * {@link RecyclerView.Adapter} that can display a {@link Employee}
  */
 public class EmployeeRecyclerViewAdapter extends
         RecyclerView.Adapter<EmployeeRecyclerViewAdapter.ViewHolder> {
 
     private final List<Employee> mValues;
-    private final EmployeeFragment.OnListFragmentInteractionListener mListener;
 
-    public EmployeeRecyclerViewAdapter(List<Employee> items,
-                                       EmployeeFragment
-                                               .OnListFragmentInteractionListener listener) {
+    public EmployeeRecyclerViewAdapter(List<Employee> items) {
         mValues = items;
-        mListener = listener;
     }
 
     @Override
@@ -54,16 +48,6 @@ public class EmployeeRecyclerViewAdapter extends
                 mValues.get(position).getSalary()));
         holder.mAgeView.setText(String.format(Locale.US, "Age: %d",
                 mValues.get(position).getAge()));
-//        holder.mView.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                if (null != mListener) {
-//                    // Notify the active callbacks interface (the activity, if the
-//                    // fragment is attached to one) that an item has been selected.
-//                    mListener.onListFragmentInteraction(holder.mItem);
-//                }
-//            }
-//        });
     }
 
     @Override

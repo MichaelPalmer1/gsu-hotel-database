@@ -45,7 +45,29 @@
     <string name="date_to">Date To</string>
     <string name="action_search">Search</string>
     <string name="action_select">Select</string>
+    <string name="action_lookup">Lookup</string>
+    <string name="lookup_reservation">Lookup Reservation</string>
+    <string name="make_reservation">Make Reservation</string>
+    <string name="reservation_number">Reservation Number</string>
     <string name="guests">Guests</string>
+
+    <!-- Payment -->
+    <string name="cardholder_name">Cardholder Name</string>
+    <string name="billing_address">Billing Address</string>
+    <string name="billing_city_state_zip">City/State/Zip</string>
+    <string name="hint_address">123 Main St.</string>
+    <string name="hint_city">City</string>
+    <string name="hint_state">ST</string>
+    <string name="hint_zipcode">12345</string>
+    <string name="card_number">Card Number</string>
+    <string name="expiration_date">Expiration Date</string>
+    <string name="cvv">CVV</string>
+    <string name="card_type">Card Type</string>
+    <string name="hint_card_type">VISA</string>
+    <string name="hint_card_number">1234123412341234</string>
+    <string name="hint_card_expiration">MMYY</string>
+    <string name="hint_cvv">123</string>
+    <string name="action_submit">Submit</string>
 
     <!-- Number of guests -->
     <string-array name="guest_count">
