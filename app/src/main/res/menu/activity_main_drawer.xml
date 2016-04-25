@@ -26,7 +26,7 @@
             android:title="@string/nav_employees"/>
         <item
             android:id="@+id/nav_employee_stats"
-            android:icon="@drawable/ic_supervisor_account_black_24dp"
+            android:icon="@drawable/ic_insert_chart_black_24dp"
             android:title="@string/nav_employee_stats"/>
     </group>
 
