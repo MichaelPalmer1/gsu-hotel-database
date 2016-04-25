@@ -4,6 +4,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -15,16 +16,16 @@ import java.util.List;
 
 /**
  * {@link RecyclerView.Adapter} that can display a {@link Room} and makes a call to the
- * specified {@link RoomFragment.OnListFragmentInteractionListener}.
+ * specified {@link RoomFragment.OnBookClickedListener}.
  */
 public class RoomRecyclerViewAdapter extends
         RecyclerView.Adapter<RoomRecyclerViewAdapter.ViewHolder> {
 
     private final List<Room> mValues;
-    private final RoomFragment.OnListFragmentInteractionListener mListener;
+    private final RoomFragment.OnBookClickedListener mListener;
 
     public RoomRecyclerViewAdapter(List<Room> items,
-                                   RoomFragment.OnListFragmentInteractionListener listener) {
+                                   RoomFragment.OnBookClickedListener listener) {
         mValues = items;
         mListener = listener;
     }
@@ -42,26 +43,13 @@ public class RoomRecyclerViewAdapter extends
         holder.mIdView.setText(holder.mItem.getRoomType());
         holder.mImageView.setImageResource(holder.mItem.getRoomPicResource());
         holder.mContentView.setText(holder.mItem.getRoomDesc());
-//        holder.mView.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                if (null != mListener) {
-//                    // Notify the active callbacks interface (the activity, if the
-//                    // fragment is attached to one) that an item has been selected.
-//                    mListener.onListFragmentInteraction(holder.mItem);
-//                }
-//            }
-//        });
-//        Button learn_more = (Button) holder.mView.findViewById(R.id.btn_learn_more);
-//        learn_more.setOnClickListener(new View.OnClickListener() {
-//
-//            @Override
-//            public void onClick(View v) {
-//                if (mListener != null) {
-//                    mListener.onListFragmentInteraction(holder.mItem);
-//                }
-//            }
-//        });
+        Button btn_book = (Button) holder.mView.findViewById(R.id.btn_book);
+        btn_book.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mListener.onBookClicked();
+            }
+        });
     }
 
     @Override

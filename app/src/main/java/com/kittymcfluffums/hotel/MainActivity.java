@@ -18,7 +18,7 @@ import com.kittymcfluffums.hotel.fragments.*;
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener,
         HomeFragment.OnFragmentInteractionListener,
-        RoomFragment.OnListFragmentInteractionListener,
+        RoomFragment.OnBookClickedListener,
         ReservationsFragment.OnReservationSearchListener,
         GuestFragment.OnListFragmentInteractionListener,
         EmployeeFragment.OnListFragmentInteractionListener,
@@ -121,15 +121,15 @@ public class MainActivity extends AppCompatActivity
         // TODO: Implement this
     }
 
-    @Override
-    public void onListFragmentInteraction(Room room) {
-        Bundle args = new Bundle();
-        args.putString("room_type", room.getRoomType());
-        args.putInt("room_type_id", room.getRoomTypeId());
-        RoomInfoDialog dialog = new RoomInfoDialog();
-        dialog.setArguments(args);
-        dialog.show(getSupportFragmentManager(), "RoomInfoDialog");
-    }
+//    @Override
+//    public void onListFragmentInteraction(Room room) {
+//        Bundle args = new Bundle();
+//        args.putString("room_type", room.getRoomType());
+//        args.putInt("room_type_id", room.getRoomTypeId());
+//        RoomInfoDialog dialog = new RoomInfoDialog();
+//        dialog.setArguments(args);
+//        dialog.show(getSupportFragmentManager(), "RoomInfoDialog");
+//    }
 
     @Override
     public void onListFragmentInteraction(Guest guest) {
@@ -175,5 +175,10 @@ public class MainActivity extends AppCompatActivity
         ReservationGuestInfoDialog reservationGuestInfoDialog = new ReservationGuestInfoDialog();
         reservationGuestInfoDialog.setArguments(args);
         reservationGuestInfoDialog.show(getSupportFragmentManager(), "ReservationGuestInfoDialog");
+    }
+
+    @Override
+    public void onBookClicked() {
+        setFragment(new ReservationsFragment(), R.string.nav_reservations);
     }
 }

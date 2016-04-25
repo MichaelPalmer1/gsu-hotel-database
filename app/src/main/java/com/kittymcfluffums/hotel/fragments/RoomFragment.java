@@ -23,7 +23,7 @@ import java.util.Locale;
 
 /**
  * Fragment for the rooms screen.
- * Activities containing this fragment MUST implement the {@link OnListFragmentInteractionListener}
+ * Activities containing this fragment MUST implement the {@link OnBookClickedListener}
  * interface.
  */
 public class RoomFragment extends Fragment {
@@ -31,7 +31,7 @@ public class RoomFragment extends Fragment {
     public static final ArrayList<Room> ITEMS = new ArrayList<>();
     private RecyclerView recyclerView;
 
-    protected OnListFragmentInteractionListener mListener;
+    protected OnBookClickedListener mListener;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -55,11 +55,11 @@ public class RoomFragment extends Fragment {
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-        if (context instanceof OnListFragmentInteractionListener) {
-            mListener = (OnListFragmentInteractionListener) context;
+        if (context instanceof OnBookClickedListener) {
+            mListener = (OnBookClickedListener) context;
         } else {
             throw new RuntimeException(context.toString()
-                    + " must implement OnListFragmentInteractionListener");
+                    + " must implement OnBookClickedListener");
         }
     }
 
@@ -78,8 +78,8 @@ public class RoomFragment extends Fragment {
      * http://developer.android.com/training/basics/fragments/communicating.html
      * for more information.
      */
-    public interface OnListFragmentInteractionListener {
-        void onListFragmentInteraction(Room room);
+    public interface OnBookClickedListener {
+        void onBookClicked();
     }
 
     class APIRoom extends API.Get {

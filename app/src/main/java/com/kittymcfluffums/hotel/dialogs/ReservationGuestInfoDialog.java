@@ -55,6 +55,51 @@ public class ReservationGuestInfoDialog extends DialogFragment implements View.O
     @Override
     public void onClick(View v) {
         if (v.getId() == R.id.btn_reservation_submit) {
+            boolean has_error = false;
+            if (first_name.getText().toString().equals("")) {
+                first_name.setHint("First Name is required");
+                first_name.setError("First Name is required");
+                has_error = true;
+            } else {
+                first_name.setError(null);
+            }
+
+            if (middle_name.getText().toString().equals("")) {
+                middle_name.setHint("Middle Name is required");
+                middle_name.setError("Middle Name is required");
+                has_error = true;
+            } else {
+                middle_name.setError(null);
+            }
+
+            if (last_name.getText().toString().equals("")) {
+                last_name.setHint("Last Name is required");
+                last_name.setError("Last Name is required");
+                has_error = true;
+            } else {
+                last_name.setError(null);
+            }
+
+            if (email.getText().toString().equals("")) {
+                email.setHint("Email is required");
+                email.setError("Email is required");
+                has_error = true;
+            } else {
+                email.setError(null);
+            }
+
+            if (phone.getText().toString().equals("")) {
+                phone.setHint("Phone is required");
+                phone.setError("Phone is required");
+                has_error = true;
+            } else {
+                phone.setError(null);
+            }
+
+            if (has_error) {
+                return;
+            }
+
             String sql;
             APIReserve1 apiReserve1 = new APIReserve1();
 
