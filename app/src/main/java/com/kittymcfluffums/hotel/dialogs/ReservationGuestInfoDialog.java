@@ -1,24 +1,16 @@
 package com.kittymcfluffums.hotel.dialogs;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.Toast;
 
-import com.kittymcfluffums.hotel.API;
-import com.kittymcfluffums.hotel.Constants;
 import com.kittymcfluffums.hotel.Listeners;
 import com.kittymcfluffums.hotel.R;
-
-import org.json.JSONArray;
-import org.json.JSONException;
-
-import java.util.Locale;
 
 /**
  * Fragment for the rooms screen.
@@ -52,11 +44,73 @@ public class ReservationGuestInfoDialog extends DialogFragment {
         btn_submit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                mListener.onGuestInfoSubmitted(room_number, date_from, date_to, first_name,
-                        middle_name, last_name, email, phone);
+                if (fieldsInvalid()) {
+                    return;
+                }
+                mListener.onGuestInfoSubmitted(room_number, date_from, date_to,
+                        first_name.getText().toString(), middle_name.getText().toString(),
+                        last_name.getText().toString(), email.getText().toString(),
+                        phone.getText().toString());
             }
         });
 
         return rootView;
+    }
+
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        if (context instanceof Listeners) {
+            mListener = (Listeners) context;
+        } else {
+            throw new RuntimeException(context.toString()
+                    + " must implement Listeners");
+        }
+    }
+
+    @Override
+    public void onDetach() {
+        super.onDetach();
+        mListener = null;
+    }
+
+    private boolean fieldsInvalid() {
+        boolean has_error = false;
+        if (first_name.getText().toString().equals("")) {
+            first_name.setError("First Name is required");
+            has_error = true;
+        } else {
+            first_name.setError(null);
+        }
+
+        if (middle_name.getText().toString().equals("")) {
+            middle_name.setError("Middle Name is required");
+            has_error = true;
+        } else {
+            middle_name.setError(null);
+        }
+
+        if (last_name.getText().toString().equals("")) {
+            last_name.setError("Last Name is required");
+            has_error = true;
+        } else {
+            last_name.setError(null);
+        }
+
+        if (email.getText().toString().equals("")) {
+            email.setError("Email is required");
+            has_error = true;
+        } else {
+            email.setError(null);
+        }
+
+        if (phone.getText().toString().equals("")) {
+            phone.setError("Phone is required");
+            has_error = true;
+        } else {
+            phone.setError(null);
+        }
+
+        return has_error;
     }
 }

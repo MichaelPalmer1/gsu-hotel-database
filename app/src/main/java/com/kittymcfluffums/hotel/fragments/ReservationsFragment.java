@@ -12,6 +12,7 @@ import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.Spinner;
+import android.widget.TextView;
 
 import com.kittymcfluffums.hotel.Listeners;
 import com.kittymcfluffums.hotel.R;
@@ -59,7 +60,6 @@ public class ReservationsFragment extends Fragment
                 if (mListener != null) {
                     boolean has_error = false;
                     if (date_from.getText().toString().equals("")) {
-                        date_from.setHint("Date From is required");
                         date_from.setError("Date From is required");
                         has_error = true;
                     } else {
@@ -67,7 +67,6 @@ public class ReservationsFragment extends Fragment
                     }
 
                     if (date_to.getText().toString().equals("")) {
-                        date_to.setHint("Date To is required");
                         date_to.setError("Date To is required");
                         has_error = true;
                     } else {
@@ -81,6 +80,27 @@ public class ReservationsFragment extends Fragment
                     mListener.onReservationSearch(
                             date_from.getText().toString(),date_to.getText().toString(),
                             Integer.parseInt(guest_count.getSelectedItem().toString()));
+                }
+            }
+        });
+
+        Button btn_lookup = (Button) view.findViewById(R.id.btn_reservation_lookup);
+        final EditText reservation_id = (EditText) view.findViewById(R.id.reservation_id);
+        btn_lookup.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+                if (mListener != null) {
+                    boolean has_error = false;
+                    if (reservation_id.getText().toString().equals("")) {
+                        reservation_id.setError("Reservation ID is required");
+                        return;
+                    } else {
+                        reservation_id.setError(null);
+                    }
+
+                    mListener.onReservationLookup(Integer.parseInt(
+                            reservation_id.getText().toString()));
                 }
             }
         });

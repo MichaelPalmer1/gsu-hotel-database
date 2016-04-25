@@ -17,34 +17,6 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/card_type" />
-
-        <EditText
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/reservation_payment_card_type"
-            android:hint="@string/hint_card_type"
-            android:maxLines="1"
-            android:maxLength="18"
-            android:inputType="text" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/cardholder_name" />
-
-        <EditText
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/reservation_payment_cardholder_name"
-            android:hint="@string/hint_name"
-            android:maxLines="1"
-            android:maxLength="25"
-            android:inputType="text" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
             android:text="@string/billing_address" />
 
         <EditText
@@ -53,7 +25,7 @@
             android:id="@+id/reservation_payment_billing_address"
             android:hint="@string/hint_address"
             android:maxLength="30"
-            android:inputType="textPostalAddress" />
+            android:inputType="textPostalAddress|textCapWords" />
 
         <TextView
             android:layout_width="wrap_content"
@@ -68,27 +40,27 @@
             <EditText
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_weight="0.7"
+                android:layout_weight="0.6"
                 android:id="@+id/reservation_payment_billing_city"
                 android:hint="@string/hint_city"
                 android:maxLines="1"
                 android:maxLength="30"
-                android:inputType="text" />
+                android:inputType="textCapWords" />
 
             <EditText
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_weight="0.1"
+                android:layout_weight="0.15"
                 android:id="@+id/reservation_payment_billing_state"
                 android:hint="@string/hint_state"
                 android:maxLines="1"
                 android:maxLength="2"
-                android:inputType="text" />
+                android:inputType="textCapCharacters" />
 
             <EditText
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_weight="0.2"
+                android:layout_weight="0.25"
                 android:id="@+id/reservation_payment_billing_zipcode"
                 android:hint="@string/hint_zipcode"
                 android:maxLines="1"
@@ -100,44 +72,72 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/card_number" />
+            android:text="@string/cardholder_name" />
 
         <EditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/reservation_payment_card_number"
-            android:hint="@string/hint_card_number"
+            android:id="@+id/reservation_payment_cardholder_name"
+            android:hint="@string/hint_name"
             android:maxLines="1"
-            android:maxLength="16"
-            android:inputType="number" />
+            android:maxLength="25"
+            android:inputType="textPersonName" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/expiration_date" />
+            android:text="@string/card_type" />
 
         <EditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/reservation_payment_card_expiration"
-            android:hint="@string/hint_card_expiration"
+            android:id="@+id/reservation_payment_card_type"
+            android:hint="@string/hint_card_type"
             android:maxLines="1"
-            android:maxLength="4"
-            android:inputType="number" />
+            android:maxLength="18"
+            android:inputType="text" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/cvv" />
+            android:text="Card Number/Expiration/CVV" />
 
-        <EditText
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/reservation_payment_card_cvv"
-            android:hint="@string/hint_cvv"
-            android:maxLines="1"
-            android:maxLength="3"
-            android:inputType="number" />
+            android:orientation="horizontal">
+
+            <EditText
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.62"
+                android:id="@+id/reservation_payment_card_number"
+                android:hint="@string/hint_card_number"
+                android:maxLines="1"
+                android:maxLength="16"
+                android:inputType="number" />
+
+            <EditText
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.21"
+                android:id="@+id/reservation_payment_card_expiration"
+                android:hint="@string/hint_card_expiration"
+                android:maxLines="1"
+                android:maxLength="4"
+                android:inputType="number" />
+
+            <EditText
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.17"
+                android:id="@+id/reservation_payment_card_cvv"
+                android:hint="@string/hint_cvv"
+                android:maxLines="1"
+                android:maxLength="3"
+                android:inputType="number" />
+
+        </LinearLayout>
 
         <Button
             android:layout_width="match_parent"
