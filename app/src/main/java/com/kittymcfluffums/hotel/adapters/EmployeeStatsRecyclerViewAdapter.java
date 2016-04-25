@@ -8,15 +8,11 @@ import android.widget.TextView;
 
 import com.kittymcfluffums.hotel.EmployeeStat;
 import com.kittymcfluffums.hotel.R;
-import com.kittymcfluffums.hotel.Room;
-import com.kittymcfluffums.hotel.fragments.EmployeeStatsFragment;
-import com.kittymcfluffums.hotel.fragments.RoomFragment;
 
 import java.util.List;
 
 /**
- * {@link RecyclerView.Adapter} that can display a {@link Room} and makes a call to the
- * specified {@link RoomFragment.OnListFragmentInteractionListener}.
+ * {@link RecyclerView.Adapter} that can display a {@link EmployeeStat}.
  */
 public class EmployeeStatsRecyclerViewAdapter extends
         RecyclerView.Adapter<EmployeeStatsRecyclerViewAdapter.ViewHolder> {
@@ -38,7 +34,7 @@ public class EmployeeStatsRecyclerViewAdapter extends
     public void onBindViewHolder(final ViewHolder holder, int position) {
         holder.empStat = mValues.get(position);
         holder.mMetric.setText(holder.empStat.getMetric());
-        holder.mMetricValue.setText(holder.empStat.getMetric_value());
+        holder.mMetricValue.setText(String.valueOf(mValues.get(position).getMetric_value()));
     }
 
     @Override

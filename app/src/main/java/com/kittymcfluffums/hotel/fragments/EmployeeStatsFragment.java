@@ -30,15 +30,11 @@ public class EmployeeStatsFragment extends Fragment {
     ));
     private RecyclerView recyclerView;
 
-    public EmployeeStatsFragment() {
-
-    }
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View view = inflater.inflate(R.layout.fragment_employee_stats, container, false);
+        View view = inflater.inflate(R.layout.fragment_employee_stats_list, container, false);
 
         // Set the adapter
         if (view instanceof RecyclerView) {
@@ -48,7 +44,7 @@ public class EmployeeStatsFragment extends Fragment {
         }
 
         HotelEmpStats emp_count = new HotelEmpStats();
-        String emp_count_query = "SELECT COUNT(*) as 'value' from `Employee`;";
+        String emp_count_query = API.buildQuery("SELECT COUNT(*) as 'value' from `Employee`;");
         emp_count.execute(Constants.API_QUERY_URL, emp_count_query);
 
         return view;
@@ -58,6 +54,7 @@ public class EmployeeStatsFragment extends Fragment {
     class HotelEmpStats extends API.Post {
         protected void processData(String json) {
             try {
+                ITEMS.clear();
                 JSONArray jsonArray = new JSONArray(json);
                 for (int i = 0; i < jsonArray.length(); i++) {
                     ITEMS.add(new EmployeeStat(
