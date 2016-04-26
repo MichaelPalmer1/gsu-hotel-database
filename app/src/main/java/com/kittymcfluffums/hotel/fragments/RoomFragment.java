@@ -11,6 +11,7 @@ import android.view.ViewGroup;
 
 import com.kittymcfluffums.hotel.API;
 import com.kittymcfluffums.hotel.Constants;
+import com.kittymcfluffums.hotel.Listeners;
 import com.kittymcfluffums.hotel.R;
 import com.kittymcfluffums.hotel.Room;
 import com.kittymcfluffums.hotel.adapters.RoomRecyclerViewAdapter;
@@ -23,7 +24,7 @@ import java.util.Locale;
 
 /**
  * Fragment for the rooms screen.
- * Activities containing this fragment MUST implement the {@link OnBookClickedListener}
+ * Activities containing this fragment MUST implement the {@link Listeners}
  * interface.
  */
 public class RoomFragment extends Fragment {
@@ -31,7 +32,7 @@ public class RoomFragment extends Fragment {
     public static final ArrayList<Room> ITEMS = new ArrayList<>();
     private RecyclerView recyclerView;
 
-    protected OnBookClickedListener mListener;
+    protected Listeners mListener;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -55,11 +56,10 @@ public class RoomFragment extends Fragment {
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-        if (context instanceof OnBookClickedListener) {
-            mListener = (OnBookClickedListener) context;
+        if (context instanceof Listeners) {
+            mListener = (Listeners) context;
         } else {
-            throw new RuntimeException(context.toString()
-                    + " must implement OnBookClickedListener");
+            throw new RuntimeException(context.toString() + " must implement Listeners");
         }
     }
 
@@ -67,19 +67,6 @@ public class RoomFragment extends Fragment {
     public void onDetach() {
         super.onDetach();
         mListener = null;
-    }
-
-    /**
-     * This interface must be implemented by activities that contain this
-     * fragment to allow an interaction in this fragment to be communicated
-     * to the activity and potentially other fragments contained in that
-     * activity.
-     * See the Android Training lesson Communicating with Other Fragments
-     * http://developer.android.com/training/basics/fragments/communicating.html
-     * for more information.
-     */
-    public interface OnBookClickedListener {
-        void onBookClicked();
     }
 
     class APIRoom extends API.Get {

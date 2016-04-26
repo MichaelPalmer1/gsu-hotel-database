@@ -8,25 +8,20 @@ import android.widget.TextView;
 
 import com.kittymcfluffums.hotel.Guest;
 import com.kittymcfluffums.hotel.R;
-import com.kittymcfluffums.hotel.fragments.GuestFragment;
 
 import java.util.List;
 import java.util.Locale;
 
 /**
- * {@link RecyclerView.Adapter} that can display a {@link Guest} and makes a call to the
- * specified {@link GuestFragment.OnListFragmentInteractionListener}.
+ * {@link RecyclerView.Adapter} that can display a {@link Guest}
  */
 public class GuestRecyclerViewAdapter extends
         RecyclerView.Adapter<GuestRecyclerViewAdapter.ViewHolder> {
 
     private final List<Guest> mValues;
-    private final GuestFragment.OnListFragmentInteractionListener mListener;
 
-    public GuestRecyclerViewAdapter(List<Guest> items,
-                                    GuestFragment.OnListFragmentInteractionListener listener) {
+    public GuestRecyclerViewAdapter(List<Guest> items) {
         mValues = items;
-        mListener = listener;
     }
 
     @Override
@@ -46,16 +41,6 @@ public class GuestRecyclerViewAdapter extends
         ));
         holder.mPhoneView.setText(mValues.get(position).getPhoneNumber());
         holder.mEmailView.setText(mValues.get(position).getEmail());
-//        holder.mView.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                if (null != mListener) {
-//                    // Notify the active callbacks interface (the activity, if the
-//                    // fragment is attached to one) that an item has been selected.
-//                    mListener.onListFragmentInteraction(holder.mItem);
-//                }
-//            }
-//        });
     }
 
     @Override

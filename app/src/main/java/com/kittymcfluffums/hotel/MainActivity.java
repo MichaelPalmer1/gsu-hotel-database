@@ -1,5 +1,6 @@
 package com.kittymcfluffums.hotel;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.StringRes;
 import android.support.design.widget.CollapsingToolbarLayout;
@@ -10,24 +11,28 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.MenuItem;
+import android.widget.Toast;
 
 import com.kittymcfluffums.hotel.dialogs.*;
 import com.kittymcfluffums.hotel.fragments.*;
 
-public class MainActivity extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener,
-        HomeFragment.OnFragmentInteractionListener,
-        RoomFragment.OnBookClickedListener,
-        ReservationsFragment.OnReservationSearchListener,
-        GuestFragment.OnListFragmentInteractionListener,
-        EmployeeFragment.OnListFragmentInteractionListener,
-        ReservationRoomTypeDialog.OnRoomTypeSelectedListener,
-        RoomInfoDialog.OnRoomSelectedListener {
+import org.json.JSONArray;
+import org.json.JSONException;
+
+import java.util.Locale;
+
+public class MainActivity extends AppCompatActivity implements
+        NavigationView.OnNavigationItemSelectedListener, Listeners {
 
     private CollapsingToolbarLayout collapsingToolbar;
     private RoomInfoDialog roomInfoDialog;
     private ReservationRoomTypeDialog reservationRoomTypeDialog;
+    private ReservationGuestInfoDialog reservationGuestInfoDialog;
+    private ReservationPaymentDialog paymentDialog;
+    private int reservation_id;
+    private Context context;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,6 +62,8 @@ public class MainActivity extends AppCompatActivity
         if (navigationView != null) {
             navigationView.setNavigationItemSelectedListener(this);
         }
+
+        context = this;
 
         // Start home fragment
         setFragment(new HomeFragment(), R.string.app_name);
@@ -117,28 +124,17 @@ public class MainActivity extends AppCompatActivity
     }
 
     @Override
-    public void onFragmentInteraction(Object object) {
-        // TODO: Implement this
-    }
-
-//    @Override
-//    public void onListFragmentInteraction(Room room) {
-//        Bundle args = new Bundle();
-//        args.putString("room_type", room.getRoomType());
-//        args.putInt("room_type_id", room.getRoomTypeId());
-//        RoomInfoDialog dialog = new RoomInfoDialog();
-//        dialog.setArguments(args);
-//        dialog.show(getSupportFragmentManager(), "RoomInfoDialog");
-//    }
-
-    @Override
-    public void onListFragmentInteraction(Guest guest) {
-        // TODO: Implement this
+    public void onBookClicked() {
+        setFragment(new ReservationsFragment(), R.string.nav_reservations);
     }
 
     @Override
-    public void onListFragmentInteraction(Employee employee) {
-        // TODO: Implement this
+    public void onReservationLookup(int reservation_id) {
+        Bundle args = new Bundle();
+        args.putInt("reservation_id", reservation_id);
+        ReservationDetailsDialog detailsDialog = new ReservationDetailsDialog();
+        detailsDialog.setArguments(args);
+        detailsDialog.show(getSupportFragmentManager(), "ReservationDetailsDialog");
     }
 
     @Override
@@ -172,13 +168,104 @@ public class MainActivity extends AppCompatActivity
         args.putInt("room_number", room_number);
         args.putString("date_from", date_from);
         args.putString("date_to", date_to);
-        ReservationGuestInfoDialog reservationGuestInfoDialog = new ReservationGuestInfoDialog();
+        reservationGuestInfoDialog = new ReservationGuestInfoDialog();
         reservationGuestInfoDialog.setArguments(args);
         reservationGuestInfoDialog.show(getSupportFragmentManager(), "ReservationGuestInfoDialog");
     }
 
     @Override
-    public void onBookClicked() {
-        setFragment(new ReservationsFragment(), R.string.nav_reservations);
+    public void onGuestInfoSubmitted(int room_number, String date_from, String date_to,
+                                     String first_name, String middle_name, String last_name,
+                                     String email, String phone) {
+        String sql;
+        APIRoomUsage apiRoomUsage = new APIRoomUsage();
+
+        // Insert into room usage
+        sql = API.buildQuery(String.format(Locale.US,
+                "INSERT INTO `Room_Usage` VALUES(%d, %d, '%s', '%s');",
+                Constants.HOTEL_ID, room_number, date_from, date_to));
+        Log.d("QUERY", sql);
+        apiRoomUsage.execute(Constants.API_QUERY_URL, sql);
+
+        // Insert into reservation
+        APIReservation apiReservation = new APIReservation();
+        sql = API.buildQuery(String.format(Locale.US,
+                "INSERT INTO `Reservation` VALUES(NULL,%d,%d,'%s','%s','%s',0);",
+                Constants.HOTEL_ID, room_number, date_from, date_from, date_to));
+        Log.d("QUERY", sql);
+        apiReservation.execute(Constants.API_QUERY_URL, sql);
+
+        // Insert into guest
+        APIGuest apiGuest = new APIGuest();
+        sql = API.buildQuery(String.format(Locale.US,
+                "INSERT INTO `Guest` VALUES(%d,NULL,'%s','%s','%s','%s','%s');",
+                Constants.HOTEL_ID, first_name, middle_name, last_name, email, phone));
+        Log.d("QUERY", sql);
+        apiGuest.execute(Constants.API_QUERY_URL, sql);
+
+        // Get last insert
+        APIReservationGuest apiReservationGuest = new APIReservationGuest();
+        sql = API.buildQuery(String.format(Locale.US,
+                "INSERT INTO `Reservation_Guest` " +
+                        "VALUES(%d, (SELECT MAX(reservation_id) FROM Reservation), " +
+                        "(SELECT MAX(guest_id) FROM Guest));", Constants.HOTEL_ID));
+        Log.d("QUERY", sql);
+        apiReservationGuest.execute(Constants.API_QUERY_URL, sql);
+
+        // Output the reservation id
+        APIReservationID apiReservationID = new APIReservationID();
+        sql = API.buildQuery("SELECT MAX(reservation_id) AS id FROM Reservation;");
+        Log.d("QUERY", sql);
+        apiReservationID.execute(Constants.API_QUERY_URL, sql);
+    }
+
+    @Override
+    public void onPaymentSubmitted(String card_type, String cardholder, String address, String city,
+                                   String state, String zip, String card_number, String exp_date,
+                                   String cvv) {
+        String sql;
+        APIPayment apiPayment = new APIPayment();
+
+        // Insert into payment
+        sql = API.buildQuery(String.format(Locale.US,
+                "INSERT INTO `Payment` VALUES(NULL,%d,%s,'%s',%s,'%s','%s','%s',%s,'%s','%s');",
+                reservation_id, card_number, exp_date, cvv, address,
+                city, state, zip, card_type, cardholder));
+        Log.d("QUERY", sql);
+        apiPayment.execute(Constants.API_QUERY_URL, sql);
+    }
+
+    class APILogResult extends API.Post {
+        protected void processData(String json) {
+            Log.d("RESULT", json);
+        }
+    }
+    class APIRoomUsage extends APILogResult {}
+    class APIReservation extends APILogResult {}
+    class APIGuest extends APILogResult {}
+    class APIReservationGuest extends APILogResult {}
+    class APIReservationID extends APILogResult {
+        @Override
+        protected void processData(String json) {
+            try {
+                reservation_id = new JSONArray(json).getJSONObject(0).getInt("id");
+                reservationGuestInfoDialog.dismiss();
+                Bundle args = new Bundle();
+                args.putInt("reservation_id", reservation_id);
+                paymentDialog = new ReservationPaymentDialog();
+                paymentDialog.setArguments(args);
+                paymentDialog.show(getSupportFragmentManager(), "PaymentDialog");
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    class APIPayment extends API.Post {
+        protected void processData(String json) {
+            Log.d("RESULT", json);
+            paymentDialog.dismiss();
+            onReservationLookup(reservation_id);
+        }
     }
 }

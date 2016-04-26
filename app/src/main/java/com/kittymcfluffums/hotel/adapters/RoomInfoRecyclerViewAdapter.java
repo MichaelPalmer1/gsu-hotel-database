@@ -7,8 +7,8 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 
+import com.kittymcfluffums.hotel.Listeners;
 import com.kittymcfluffums.hotel.R;
-import com.kittymcfluffums.hotel.dialogs.RoomInfoDialog;
 
 import java.util.List;
 import java.util.Locale;
@@ -17,11 +17,11 @@ public class RoomInfoRecyclerViewAdapter extends
         RecyclerView.Adapter<RoomInfoRecyclerViewAdapter.ViewHolder> {
 
     private final List<Integer> mValues;
-    private final RoomInfoDialog.OnRoomSelectedListener mListener;
+    private final Listeners mListener;
     private String date_from, date_to;
 
     public RoomInfoRecyclerViewAdapter(List<Integer> items,
-                                       RoomInfoDialog.OnRoomSelectedListener listener,
+                                       Listeners listener,
                                        String date_from, String date_to) {
         mValues = items;
         mListener = listener;

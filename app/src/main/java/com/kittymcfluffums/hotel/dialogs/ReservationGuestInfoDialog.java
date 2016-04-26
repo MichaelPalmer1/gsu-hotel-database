@@ -1,32 +1,26 @@
 package com.kittymcfluffums.hotel.dialogs;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.Toast;
 
-import com.kittymcfluffums.hotel.API;
-import com.kittymcfluffums.hotel.Constants;
+import com.kittymcfluffums.hotel.Listeners;
 import com.kittymcfluffums.hotel.R;
-
-import org.json.JSONArray;
-import org.json.JSONException;
-
-import java.util.Locale;
 
 /**
  * Fragment for the rooms screen.
  */
-public class ReservationGuestInfoDialog extends DialogFragment implements View.OnClickListener {
+public class ReservationGuestInfoDialog extends DialogFragment {
 
     private EditText first_name, middle_name, last_name, email, phone;
     private int room_number;
     private String date_from, date_to;
+    protected Listeners mListener;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -47,130 +41,76 @@ public class ReservationGuestInfoDialog extends DialogFragment implements View.O
         phone = (EditText) rootView.findViewById(R.id.reservation_guest_phone);
 
         Button btn_submit = (Button) rootView.findViewById(R.id.btn_reservation_submit);
-        btn_submit.setOnClickListener(this);
+        btn_submit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (fieldsInvalid()) {
+                    return;
+                }
+                mListener.onGuestInfoSubmitted(room_number, date_from, date_to,
+                        first_name.getText().toString(), middle_name.getText().toString(),
+                        last_name.getText().toString(), email.getText().toString(),
+                        phone.getText().toString());
+            }
+        });
 
         return rootView;
     }
 
     @Override
-    public void onClick(View v) {
-        if (v.getId() == R.id.btn_reservation_submit) {
-            boolean has_error = false;
-            if (first_name.getText().toString().equals("")) {
-                first_name.setHint("First Name is required");
-                first_name.setError("First Name is required");
-                has_error = true;
-            } else {
-                first_name.setError(null);
-            }
-
-            if (middle_name.getText().toString().equals("")) {
-                middle_name.setHint("Middle Name is required");
-                middle_name.setError("Middle Name is required");
-                has_error = true;
-            } else {
-                middle_name.setError(null);
-            }
-
-            if (last_name.getText().toString().equals("")) {
-                last_name.setHint("Last Name is required");
-                last_name.setError("Last Name is required");
-                has_error = true;
-            } else {
-                last_name.setError(null);
-            }
-
-            if (email.getText().toString().equals("")) {
-                email.setHint("Email is required");
-                email.setError("Email is required");
-                has_error = true;
-            } else {
-                email.setError(null);
-            }
-
-            if (phone.getText().toString().equals("")) {
-                phone.setHint("Phone is required");
-                phone.setError("Phone is required");
-                has_error = true;
-            } else {
-                phone.setError(null);
-            }
-
-            if (has_error) {
-                return;
-            }
-
-            String sql;
-            APIReserve1 apiReserve1 = new APIReserve1();
-
-            // Insert into room usage
-            sql = API.buildQuery(String.format(Locale.US,
-                    "INSERT INTO `Room_Usage` VALUES(%d, %d, '%s', '%s');",
-                    Constants.HOTEL_ID, room_number, date_from, date_to));
-            Log.d("QUERY", sql);
-            apiReserve1.execute(Constants.API_QUERY_URL, sql);
-
-            // Insert into reservation
-            APIReserve2 apiReserve2 = new APIReserve2();
-            sql = API.buildQuery(String.format(Locale.US,
-                    "INSERT INTO `Reservation` VALUES(NULL,%d,%d,'%s','%s','%s',0);",
-                    Constants.HOTEL_ID, room_number, date_from, date_from, date_to));
-            Log.d("QUERY", sql);
-            apiReserve2.execute(Constants.API_QUERY_URL, sql);
-
-            // Insert into guest
-            APIReserve3 apiReserve3 = new APIReserve3();
-            sql = API.buildQuery(String.format(Locale.US,
-                    "INSERT INTO `Guest` VALUES(%d,NULL,'%s','%s','%s','%s','%s');",
-                    Constants.HOTEL_ID, first_name.getText().toString(),
-                    middle_name.getText().toString(), last_name.getText().toString(),
-                    email.getText().toString(), phone.getText().toString()));
-            Log.d("QUERY", sql);
-            apiReserve3.execute(Constants.API_QUERY_URL, sql);
-
-            // Get last insert
-            APIReserve4 apiReserve4 = new APIReserve4();
-            sql = API.buildQuery(String.format(Locale.US,
-                    "INSERT INTO `Reservation_Guest` " +
-                    "VALUES(%d, (SELECT MAX(reservation_id) FROM Reservation), " +
-                    "(SELECT MAX(guest_id) FROM Guest));", Constants.HOTEL_ID));
-            Log.d("QUERY", sql);
-            apiReserve4.execute(Constants.API_QUERY_URL, sql);
-
-            // Close the dialog
-            this.dismiss();
-
-            // Output the reservation id
-            APIReserve5 apiReserve5 = new APIReserve5();
-            sql = API.buildQuery("SELECT MAX(reservation_id) AS id FROM Reservation;");
-            Log.d("QUERY", sql);
-            apiReserve5.execute(Constants.API_QUERY_URL, sql);
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        if (context instanceof Listeners) {
+            mListener = (Listeners) context;
+        } else {
+            throw new RuntimeException(context.toString()
+                    + " must implement Listeners");
         }
     }
 
-    class APIReserve1 extends API.Post {
-        protected void processData(String json) {
-            // Don't do anything
-            Log.d("RESULT", json);
-        }
+    @Override
+    public void onDetach() {
+        super.onDetach();
+        mListener = null;
     }
-    class APIReserve2 extends APIReserve1 {}
-    class APIReserve3 extends APIReserve1 {}
-    class APIReserve4 extends APIReserve1 {}
-    class APIReserve5 extends APIReserve1 {
-        @Override
-        protected void processData(String json) {
-            try {
-                int reservation_id = new JSONArray(json).getJSONObject(0).getInt("id");
-//                Toast.makeText(
-//                        getActivity(),
-//                        String.format(Locale.US, "Reservation #%d successful", reservation_id),
-//                        Toast.LENGTH_LONG
-//                ).show();
-                Log.d("RESERVATION", String.valueOf(reservation_id));
-            } catch (JSONException e) {
-                e.printStackTrace();
-            }
+
+    private boolean fieldsInvalid() {
+        boolean has_error = false;
+        if (first_name.getText().toString().equals("")) {
+            first_name.setError("First Name is required");
+            has_error = true;
+        } else {
+            first_name.setError(null);
         }
+
+        if (middle_name.getText().toString().equals("")) {
+            middle_name.setError("Middle Name is required");
+            has_error = true;
+        } else {
+            middle_name.setError(null);
+        }
+
+        if (last_name.getText().toString().equals("")) {
+            last_name.setError("Last Name is required");
+            has_error = true;
+        } else {
+            last_name.setError(null);
+        }
+
+        if (email.getText().toString().equals("")) {
+            email.setError("Email is required");
+            has_error = true;
+        } else {
+            email.setError(null);
+        }
+
+        if (phone.getText().toString().equals("")) {
+            phone.setError("Phone is required");
+            has_error = true;
+        } else {
+            phone.setError(null);
+        }
+
+        return has_error;
     }
 }

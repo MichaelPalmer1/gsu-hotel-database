@@ -22,15 +22,11 @@ import java.util.ArrayList;
 
 /**
  * Fragment for the guests screen.
- * Activities containing this fragment MUST implement the {@link OnListFragmentInteractionListener}
- * interface.
  */
 public class GuestFragment extends Fragment {
 
     public static final ArrayList<Guest> ITEMS = new ArrayList<>();
     private RecyclerView recyclerView;
-
-    protected OnListFragmentInteractionListener mListener;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -50,37 +46,6 @@ public class GuestFragment extends Fragment {
         return view;
     }
 
-
-    @Override
-    public void onAttach(Context context) {
-        super.onAttach(context);
-        if (context instanceof OnListFragmentInteractionListener) {
-            mListener = (OnListFragmentInteractionListener) context;
-        } else {
-            throw new RuntimeException(context.toString()
-                    + " must implement OnListFragmentInteractionListener");
-        }
-    }
-
-    @Override
-    public void onDetach() {
-        super.onDetach();
-        mListener = null;
-    }
-
-    /**
-     * This interface must be implemented by activities that contain this
-     * fragment to allow an interaction in this fragment to be communicated
-     * to the activity and potentially other fragments contained in that
-     * activity.
-     * See the Android Training lesson Communicating with Other Fragments
-     * http://developer.android.com/training/basics/fragments/communicating.html
-     * for more information.
-     */
-    public interface OnListFragmentInteractionListener {
-        void onListFragmentInteraction(Guest guest);
-    }
-
     class APIGuest extends API.Get {
 
         protected void processData(String json) {
@@ -97,7 +62,7 @@ public class GuestFragment extends Fragment {
                     ));
                 }
 
-                recyclerView.setAdapter(new GuestRecyclerViewAdapter(ITEMS, mListener));
+                recyclerView.setAdapter(new GuestRecyclerViewAdapter(ITEMS));
 
             } catch (JSONException e) {
                 e.printStackTrace();

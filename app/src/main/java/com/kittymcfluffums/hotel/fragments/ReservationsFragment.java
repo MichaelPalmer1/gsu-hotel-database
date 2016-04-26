@@ -12,7 +12,9 @@ import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.Spinner;
+import android.widget.TextView;
 
+import com.kittymcfluffums.hotel.Listeners;
 import com.kittymcfluffums.hotel.R;
 
 import java.text.SimpleDateFormat;
@@ -22,14 +24,11 @@ import java.util.Locale;
 
 /**
  * Fragment for the reservations screen.
- * Activities that contain this fragment must implement the
- * {@link HomeFragment.OnFragmentInteractionListener} interface
- * to handle interaction events.
  */
 public class ReservationsFragment extends Fragment
         implements View.OnClickListener, DatePickerDialog.OnDateSetListener {
 
-    private OnReservationSearchListener mListener;
+    private Listeners mListener;
     private EditText date_view, date_from, date_to;
     private Spinner guest_count;
     private SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.US);
@@ -61,7 +60,6 @@ public class ReservationsFragment extends Fragment
                 if (mListener != null) {
                     boolean has_error = false;
                     if (date_from.getText().toString().equals("")) {
-                        date_from.setHint("Date From is required");
                         date_from.setError("Date From is required");
                         has_error = true;
                     } else {
@@ -69,7 +67,6 @@ public class ReservationsFragment extends Fragment
                     }
 
                     if (date_to.getText().toString().equals("")) {
-                        date_to.setHint("Date To is required");
                         date_to.setError("Date To is required");
                         has_error = true;
                     } else {
@@ -87,17 +84,37 @@ public class ReservationsFragment extends Fragment
             }
         });
 
+        Button btn_lookup = (Button) view.findViewById(R.id.btn_reservation_lookup);
+        final EditText reservation_id = (EditText) view.findViewById(R.id.reservation_id);
+        btn_lookup.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+                if (mListener != null) {
+                    boolean has_error = false;
+                    if (reservation_id.getText().toString().equals("")) {
+                        reservation_id.setError("Reservation ID is required");
+                        return;
+                    } else {
+                        reservation_id.setError(null);
+                    }
+
+                    mListener.onReservationLookup(Integer.parseInt(
+                            reservation_id.getText().toString()));
+                }
+            }
+        });
+
         return view;
     }
 
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-        if (context instanceof OnReservationSearchListener) {
-            mListener = (OnReservationSearchListener) context;
+        if (context instanceof Listeners) {
+            mListener = (Listeners) context;
         } else {
-            throw new RuntimeException(context.toString()
-                    + " must implement OnReservationSearchListener");
+            throw new RuntimeException(context.toString() + " must implement Listeners");
         }
     }
 
@@ -145,18 +162,5 @@ public class ReservationsFragment extends Fragment
         Calendar date_selected = Calendar.getInstance();
         date_selected.set(year, monthOfYear, dayOfMonth);
         date_view.setText(dateFormat.format(date_selected.getTime()));
-    }
-
-    /**
-     * This interface must be implemented by activities that contain this
-     * fragment to allow an interaction in this fragment to be communicated
-     * to the activity and potentially other fragments contained in that
-     * activity.
-     * See the Android Training lesson Communicating with Other Fragments
-     * http://developer.android.com/training/basics/fragments/communicating.html
-     * for more information.
-     */
-    public interface OnReservationSearchListener {
-        void onReservationSearch(String date_from, String date_to, int guests);
     }
 }

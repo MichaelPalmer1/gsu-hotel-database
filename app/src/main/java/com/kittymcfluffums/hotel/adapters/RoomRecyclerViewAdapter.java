@@ -8,24 +8,24 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.kittymcfluffums.hotel.Listeners;
 import com.kittymcfluffums.hotel.R;
 import com.kittymcfluffums.hotel.Room;
-import com.kittymcfluffums.hotel.fragments.RoomFragment;
 
 import java.util.List;
 
 /**
  * {@link RecyclerView.Adapter} that can display a {@link Room} and makes a call to the
- * specified {@link RoomFragment.OnBookClickedListener}.
+ * specified {@link Listeners}.
  */
 public class RoomRecyclerViewAdapter extends
         RecyclerView.Adapter<RoomRecyclerViewAdapter.ViewHolder> {
 
     private final List<Room> mValues;
-    private final RoomFragment.OnBookClickedListener mListener;
+    private final Listeners mListener;
 
     public RoomRecyclerViewAdapter(List<Room> items,
-                                   RoomFragment.OnBookClickedListener listener) {
+                                   Listeners listener) {
         mValues = items;
         mListener = listener;
     }

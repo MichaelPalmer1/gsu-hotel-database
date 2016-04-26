@@ -22,15 +22,11 @@ import java.util.ArrayList;
 
 /**
  * Fragment for the employee screen.
- * Activities containing this fragment MUST implement the {@link OnListFragmentInteractionListener}
- * interface.
  */
 public class EmployeeFragment extends Fragment {
 
     public static final ArrayList<Employee> ITEMS = new ArrayList<>();
     private RecyclerView recyclerView;
-
-    protected OnListFragmentInteractionListener mListener;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -48,37 +44,6 @@ public class EmployeeFragment extends Fragment {
         api.execute(Constants.API_URL + "/Employee/");
 
         return view;
-    }
-
-
-    @Override
-    public void onAttach(Context context) {
-        super.onAttach(context);
-        if (context instanceof OnListFragmentInteractionListener) {
-            mListener = (OnListFragmentInteractionListener) context;
-        } else {
-            throw new RuntimeException(context.toString()
-                    + " must implement OnListFragmentInteractionListener");
-        }
-    }
-
-    @Override
-    public void onDetach() {
-        super.onDetach();
-        mListener = null;
-    }
-
-    /**
-     * This interface must be implemented by activities that contain this
-     * fragment to allow an interaction in this fragment to be communicated
-     * to the activity and potentially other fragments contained in that
-     * activity.
-     * See the Android Training lesson Communicating with Other Fragments
-     * http://developer.android.com/training/basics/fragments/communicating.html
-     * for more information.
-     */
-    public interface OnListFragmentInteractionListener {
-        void onListFragmentInteraction(Employee employee);
     }
 
     class APIEmployee extends API.Get {
@@ -100,7 +65,7 @@ public class EmployeeFragment extends Fragment {
                     ));
                 }
 
-                recyclerView.setAdapter(new EmployeeRecyclerViewAdapter(ITEMS, mListener));
+                recyclerView.setAdapter(new EmployeeRecyclerViewAdapter(ITEMS));
 
             } catch (JSONException e) {
                 e.printStackTrace();
