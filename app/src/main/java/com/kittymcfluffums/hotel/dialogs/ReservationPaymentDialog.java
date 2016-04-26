@@ -30,8 +30,6 @@ public class ReservationPaymentDialog extends DialogFragment {
 
         super.getDialog().setTitle("Payment");
 
-        int reservation_id = getArguments().getInt("reservation_id");
-
         card_type = (EditText) rootView.findViewById(R.id.reservation_payment_card_type);
         cardholder = (EditText) rootView.findViewById(R.id.reservation_payment_cardholder_name);
         address = (EditText) rootView.findViewById(R.id.reservation_payment_billing_address);

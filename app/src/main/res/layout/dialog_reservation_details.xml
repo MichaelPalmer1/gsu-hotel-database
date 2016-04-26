@@ -10,74 +10,74 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceMedium"
-        android:text="Room Number" />
+        android:text="@string/room_number" />
 
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/reservation_details_room_number"
-        android:text="xyz" />
+        android:text="@string/hint_cvv" />
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceMedium"
-        android:text="Room Type" />
+        android:text="@string/hint_room_type" />
 
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/reservation_details_room_type"
-        android:text="xyz" />
+        android:text="@string/hint_room_type" />
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceMedium"
-        android:text="Guest Name" />
+        android:text="@string/guest_name" />
 
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/reservation_details_guest_name"
-        android:text="John Doe" />
+        android:text="@string/hint_name" />
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceMedium"
-        android:text="Start Date" />
+        android:text="@string/start_date" />
 
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/reservation_details_start_date"
-        android:text="05/05/2005" />
+        android:text="@string/hint_date" />
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceMedium"
-        android:text="End Date" />
+        android:text="@string/end_date" />
 
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/reservation_details_end_date"
-        android:text="05/05/2005" />
+        android:text="@string/hint_date" />
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceMedium"
-        android:text="Total Cost ($)" />
+        android:text="@string/total_cost" />
 
     <EditText
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/reservation_details_total_cost"
         android:inputType="numberDecimal"
-        android:text="100.23" />
+        android:text="@string/hint_total_cost" />
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -90,7 +90,7 @@
             android:layout_weight="0.5"
             android:id="@+id/btn_reservation_update"
             style="@style/Widget.AppCompat.Button.Colored"
-            android:text="Update" />
+            android:text="@string/action_update" />
 
         <Button
             android:layout_width="0dp"
@@ -98,7 +98,7 @@
             android:layout_weight="0.5"
             android:id="@+id/btn_reservation_delete"
             style="@style/Widget.AppCompat.Button.Colored"
-            android:text="Delete" />
+            android:text="@string/action_delete" />
 
     </LinearLayout>
 

@@ -21,6 +21,7 @@
     <string name="action_book">Book</string>
     <string name="hint_room_type">Room Type</string>
     <string name="hint_description">Description</string>
+    <string name="hint_room_number">Room 1234</string>
 
     <!-- Guests -->
     <string name="hint_name">John H. Doe</string>
@@ -31,7 +32,6 @@
     <string name="hint_position">Position</string>
     <string name="hint_demographic">Demographic</string>
     <string name="hint_age">Age</string>
-    <string name="hint_date">Date</string>
     <string name="hint_salary">Salary</string>
 
     <!-- Employee Stats -->
@@ -50,6 +50,11 @@
     <string name="make_reservation">Make Reservation</string>
     <string name="reservation_number">Reservation Number</string>
     <string name="guests">Guests</string>
+    <string name="first_name">First Name</string>
+    <string name="middle_name">Middle Name</string>
+    <string name="last_name">Last Name</string>
+    <string name="email">Email</string>
+    <string name="phone">Phone</string>
 
     <!-- Payment -->
     <string name="cardholder_name">Cardholder Name</string>
@@ -68,6 +73,15 @@
     <string name="hint_card_expiration">MMYY</string>
     <string name="hint_cvv">123</string>
     <string name="action_submit">Submit</string>
+    <string name="action_update">Update</string>
+    <string name="action_delete">Delete</string>
+    <string name="room_number">Room Number</string>
+    <string name="guest_name">Guest Name</string>
+    <string name="start_date">Start Date</string>
+    <string name="end_date">End Date</string>
+    <string name="hint_date">MM/DD/YYYY</string>
+    <string name="total_cost">Total Cost ($)</string>
+    <string name="hint_total_cost">123.45</string>
 
     <!-- Number of guests -->
     <string-array name="guest_count">

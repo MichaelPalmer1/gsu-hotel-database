@@ -130,11 +130,12 @@ public class MainActivity extends AppCompatActivity implements
 
     @Override
     public void onReservationLookup(int reservation_id) {
-        Bundle args = new Bundle();
-        args.putInt("reservation_id", reservation_id);
-        ReservationDetailsDialog detailsDialog = new ReservationDetailsDialog();
-        detailsDialog.setArguments(args);
-        detailsDialog.show(getSupportFragmentManager(), "ReservationDetailsDialog");
+        this.reservation_id = reservation_id;
+        APILookupReservation lookupReservation = new APILookupReservation();
+        String sql = API.buildQuery(String.format(Locale.US,
+                "SELECT reservation_id FROM Reservation WHERE reservation_id = %d",
+                reservation_id));
+        lookupReservation.execute(Constants.API_QUERY_URL, sql);
     }
 
     @Override
@@ -240,6 +241,25 @@ public class MainActivity extends AppCompatActivity implements
             Log.d("RESULT", json);
         }
     }
+    class APILookupReservation extends API.Post {
+        @Override
+        protected void processData(String data) {
+            try {
+                JSONArray jsonArray = new JSONArray(data);
+                if (jsonArray.length() == 0) {
+                    Toast.makeText(context, "Invalid reservation id", Toast.LENGTH_LONG).show();
+                } else {
+                    Bundle args = new Bundle();
+                    args.putInt("reservation_id", reservation_id);
+                    ReservationDetailsDialog detailsDialog = new ReservationDetailsDialog();
+                    detailsDialog.setArguments(args);
+                    detailsDialog.show(getSupportFragmentManager(), "ReservationDetailsDialog");
+                }
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+        }
+    }
     class APIRoomUsage extends APILogResult {}
     class APIReservation extends APILogResult {}
     class APIGuest extends APILogResult {}
@@ -250,10 +270,7 @@ public class MainActivity extends AppCompatActivity implements
             try {
                 reservation_id = new JSONArray(json).getJSONObject(0).getInt("id");
                 reservationGuestInfoDialog.dismiss();
-                Bundle args = new Bundle();
-                args.putInt("reservation_id", reservation_id);
                 paymentDialog = new ReservationPaymentDialog();
-                paymentDialog.setArguments(args);
                 paymentDialog.show(getSupportFragmentManager(), "PaymentDialog");
             } catch (JSONException e) {
                 e.printStackTrace();

@@ -6,47 +6,68 @@
     tools:context=".fragments.ReservationsFragment">
 
     <TextView
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:textStyle="bold"
+        android:gravity="center_horizontal"
         android:text="@string/make_reservation" />
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/date_from" />
-
-    <EditText
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/date_from"
-        android:focusable="false"
-        android:hint="@string/from"
-        android:inputType="date" />
+        android:orientation="horizontal">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/date_to" />
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.35"
+            android:text="@string/date_from" />
 
-    <EditText
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.35"
+            android:text="@string/date_to" />
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.3"
+            android:text="@string/guests" />
+
+    </LinearLayout>
+
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/date_to"
-        android:focusable="false"
-        android:hint="@string/to"
-        android:inputType="date" />
+        android:orientation="horizontal">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/guests" />
+        <EditText
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.35"
+            android:id="@+id/date_from"
+            android:focusable="false"
+            android:hint="@string/from"
+            android:inputType="date" />
 
-    <Spinner
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/guest_count" />
+        <EditText
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.35"
+            android:id="@+id/date_to"
+            android:focusable="false"
+            android:hint="@string/to"
+            android:inputType="date" />
+
+        <Spinner
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.3"
+            android:id="@+id/guest_count" />
+
+    </LinearLayout>
 
     <Button
         android:layout_width="match_parent"
@@ -57,10 +78,11 @@
         style="@style/Widget.AppCompat.Button.Colored" />
 
     <TextView
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="32dp"
         android:textAppearance="?android:attr/textAppearanceLarge"
+        android:gravity="center_horizontal"
         android:textStyle="bold"
         android:text="@string/lookup_reservation" />
 

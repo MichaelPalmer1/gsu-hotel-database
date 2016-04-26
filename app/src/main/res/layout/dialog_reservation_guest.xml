@@ -1,97 +1,87 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.v7.widget.CardView
+<LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:card_view="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/card_room_info"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    card_view:cardUseCompatPadding="true"
-    card_view:cardCornerRadius="2dp"
-    card_view:cardElevation="5dp">
+    android:layout_height="match_parent"
+    android:padding="@dimen/dialog_padding"
+    android:orientation="vertical">
 
-    <LinearLayout
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/first_name" />
+
+    <EditText
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical">
+        android:layout_height="wrap_content"
+        android:id="@+id/reservation_guest_first_name"
+        android:hint="@string/first_name"
+        android:maxLines="1"
+        android:maxLength="25"
+        android:inputType="text" />
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="First Name" />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/middle_name" />
 
-        <EditText
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/reservation_guest_first_name"
-            android:hint="First Name"
-            android:maxLines="1"
-            android:maxLength="25"
-            android:inputType="text" />
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/reservation_guest_middle_name"
+        android:hint="@string/middle_name"
+        android:maxLines="1"
+        android:maxLength="18"
+        android:inputType="text" />
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Middle Name" />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/last_name" />
 
-        <EditText
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/reservation_guest_middle_name"
-            android:hint="Middle Name"
-            android:maxLines="1"
-            android:maxLength="18"
-            android:inputType="text" />
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/reservation_guest_last_name"
+        android:hint="@string/last_name"
+        android:maxLines="1"
+        android:maxLength="25"
+        android:inputType="text" />
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Last Name" />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/email" />
 
-        <EditText
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/reservation_guest_last_name"
-            android:hint="Last Name"
-            android:maxLines="1"
-            android:maxLength="25"
-            android:inputType="text" />
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/reservation_guest_email"
+        android:hint="@string/hint_email"
+        android:maxLines="1"
+        android:maxLength="32"
+        android:inputType="textEmailAddress" />
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Email" />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/phone" />
 
-        <EditText
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/reservation_guest_email"
-            android:hint="@string/hint_email"
-            android:maxLines="1"
-            android:maxLength="32"
-            android:inputType="textEmailAddress" />
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/reservation_guest_phone"
+        android:hint="@string/hint_phone"
+        android:maxLines="1"
+        android:maxLength="18"
+        android:inputType="phone" />
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Phone" />
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:id="@+id/btn_reservation_submit"
+        style="@style/Widget.AppCompat.Button.Colored"
+        android:textAllCaps="true"
+        android:text="@string/action_submit" />
 
-        <EditText
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/reservation_guest_phone"
-            android:hint="@string/hint_phone"
-            android:maxLines="1"
-            android:maxLength="18"
-            android:inputType="phone" />
-
-        <Button
-            android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:id="@+id/btn_reservation_submit"
-            style="@style/Widget.AppCompat.Button.Colored"
-            android:textAllCaps="true"
-            android:text="Submit" />
-
-    </LinearLayout>
-
-</android.support.v7.widget.CardView>
+</LinearLayout>

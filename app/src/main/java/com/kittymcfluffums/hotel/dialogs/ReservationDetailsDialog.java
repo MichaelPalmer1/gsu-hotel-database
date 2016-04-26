@@ -29,7 +29,6 @@ public class ReservationDetailsDialog extends DialogFragment implements View.OnC
     private TextView room_number, start_date, end_date, room_type, guest_name;
     private EditText total_cost;
     private int reservation_id;
-    private ReservationDetailsDialog dialog;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -47,7 +46,6 @@ public class ReservationDetailsDialog extends DialogFragment implements View.OnC
         start_date = (TextView) rootView.findViewById(R.id.reservation_details_start_date);
         end_date = (TextView) rootView.findViewById(R.id.reservation_details_end_date);
         total_cost = (EditText) rootView.findViewById(R.id.reservation_details_total_cost);
-        dialog = this;
 
         APIReservationDetails reservationDetails = new APIReservationDetails();
         String sql = API.buildQuery(String.format(Locale.US,
@@ -114,23 +112,16 @@ public class ReservationDetailsDialog extends DialogFragment implements View.OnC
     class APIReservationDetails extends API.Post {
         protected void processData(String json) {
             try {
-                JSONArray jsonArray = new JSONArray(json);
-                if (jsonArray.length() == 1) {
-                    JSONObject data = jsonArray.getJSONObject(0);
-                    room_number.setText(String.valueOf(data.getInt("room_number")));
-                    room_type.setText(data.getString("description"));
-                    guest_name.setText(String.format(Locale.US, "%s %s %s",
-                            data.getString("first_name"), data.getString("middle_name"),
-                            data.getString("last_name")));
-                    start_date.setText(data.getString("reservation_start_date"));
-                    end_date.setText(data.getString("reservation_end_date"));
-                    total_cost.setText(String.format(Locale.US,
-                            "%.2f", data.getDouble("total_charge")));
-                } else {
-                    dialog.dismiss();
-                    Toast.makeText(getContext(), "Invalid reservation id",
-                            Toast.LENGTH_LONG).show();
-                }
+                JSONObject data = new JSONArray(json).getJSONObject(0);
+                room_number.setText(String.valueOf(data.getInt("room_number")));
+                room_type.setText(data.getString("description"));
+                guest_name.setText(String.format(Locale.US, "%s %s %s",
+                        data.getString("first_name"), data.getString("middle_name"),
+                        data.getString("last_name")));
+                start_date.setText(data.getString("reservation_start_date"));
+                end_date.setText(data.getString("reservation_end_date"));
+                total_cost.setText(String.format(Locale.US,
+                        "%.2f", data.getDouble("total_charge")));
             } catch (JSONException e) {
                 e.printStackTrace();
             }
