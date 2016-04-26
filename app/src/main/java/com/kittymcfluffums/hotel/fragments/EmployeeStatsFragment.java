@@ -49,23 +49,31 @@ public class EmployeeStatsFragment extends Fragment {
         queries.add("SELECT COUNT(*) as 'value' from `Employee`;");
         queries.add("SELECT max(SALARY) as 'value' from Employee");
         queries.add("SELECT avg(age) from Employee");
-        queries.add("select CONCAT(last_name, \", \", first_name) as 'value'\n" +
-                "from Employee\n" +
-                "where employee_id = (\n" +
-                "SELECT `employee_id` as `value`\n" +
-                "FROM `Shift_Employees` \n" +
-                "group by `value`\n" +
-                "order by COUNT(`employee_id`) DESC\n" +
-                "LIMIT 1\n" +
+        queries.add("select CONCAT(last_name, ', ', first_name) as 'value'" +
+                " from Employee" +
+                " where employee_id = (" +
+                " SELECT `employee_id` as `value`" +
+                " FROM `Shift_Employees` " +
+                " group by `value`" +
+                " order by COUNT(`employee_id`) DESC" +
+                " LIMIT 1" +
                 "    )");
 
-        for (String query : queries)
-        {
-            HotelEmpStats stats = new HotelEmpStats();
-            String stats_query = API.buildQuery(query);
-            stats.execute(stats_query);
-        }
+        HotelEmpStats emp_count = new HotelEmpStats();
+        String emp_query = API.buildQuery(queries.get(0));
+        emp_count.execute(Constants.API_QUERY_URL, emp_query);
 
+        HotelEmpStats max_salary = new HotelEmpStats();
+        String salary_query = API.buildQuery(queries.get(1));
+        max_salary.execute(Constants.API_QUERY_URL, salary_query);
+
+        HotelEmpStats avg_age = new HotelEmpStats();
+        String avg_age_query = API.buildQuery(queries.get(2));
+        avg_age.execute(Constants.API_QUERY_URL, avg_age_query);
+
+        HotelEmpStats most_frequent_employee = new HotelEmpStats();
+        String most_frequent_employee_query = API.buildQuery(queries.get(3));
+        most_frequent_employee.execute(Constants.API_QUERY_URL, most_frequent_employee_query);
 
         return view;
     }
