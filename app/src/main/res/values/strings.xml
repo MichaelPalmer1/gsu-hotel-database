@@ -14,6 +14,8 @@
 
     <!-- Home -->
     <string name="city_state_zip">%1$s, %2$s %3$d</string>
+    <string name="hint_website">www.example.com</string>
+    <string name="hint_city_state_zip">Somewhere, ST 12345</string>
 
     <!-- Room Types -->
     <string name="picture">Picture</string>
