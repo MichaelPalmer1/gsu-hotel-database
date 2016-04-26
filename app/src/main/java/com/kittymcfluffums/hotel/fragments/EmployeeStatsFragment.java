@@ -26,7 +26,9 @@ public class EmployeeStatsFragment extends Fragment {
     public static final ArrayList<EmployeeStat> ITEMS = new ArrayList<>();
     public static final ArrayList<String> METRICS = new ArrayList<>(Arrays.asList(
             "Employee Count",
-            "Max Salary"
+            "Max Pay/Hour",
+            "Average Employee Age",
+            "Employee Working the most Hours"
     ));
     private RecyclerView recyclerView;
 
@@ -43,9 +45,27 @@ public class EmployeeStatsFragment extends Fragment {
             recyclerView.setLayoutManager(new LinearLayoutManager(context));
         }
 
-        HotelEmpStats emp_count = new HotelEmpStats();
-        String emp_count_query = API.buildQuery("SELECT COUNT(*) as 'value' from `Employee`;");
-        emp_count.execute(Constants.API_QUERY_URL, emp_count_query);
+        ArrayList<String> queries = new ArrayList<>();
+        queries.add("SELECT COUNT(*) as 'value' from `Employee`;");
+        queries.add("SELECT max(SALARY) as 'value' from Employee");
+        queries.add("SELECT avg(age) from Employee");
+        queries.add("select CONCAT(last_name, \", \", first_name) as 'value'\n" +
+                "from Employee\n" +
+                "where employee_id = (\n" +
+                "SELECT `employee_id` as `value`\n" +
+                "FROM `Shift_Employees` \n" +
+                "group by `value`\n" +
+                "order by COUNT(`employee_id`) DESC\n" +
+                "LIMIT 1\n" +
+                "    )");
+
+        for (String query : queries)
+        {
+            HotelEmpStats stats = new HotelEmpStats();
+            String stats_query = API.buildQuery(query);
+            stats.execute(stats_query);
+        }
+
 
         return view;
     }
