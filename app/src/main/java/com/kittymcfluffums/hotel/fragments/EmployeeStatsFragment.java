@@ -48,8 +48,8 @@ public class EmployeeStatsFragment extends Fragment {
         ArrayList<String> queries = new ArrayList<>();
         queries.add("SELECT '' as 'metric', COUNT(*) as 'value' from `Employee`;");
         queries.add("SELECT '' as 'metric', max(SALARY) as 'value' from Employee");
-        queries.add("SELECT '' as 'metric', avg(age) from Employee");
-        queries.add("select '' as 'metric', CONCAT(last_name, ', ', first_name) as 'value'" +
+        queries.add("SELECT '' as 'metric', avg(age) as 'value' from Employee");
+        queries.add("select '' as 'metric', CONCAT(last_name, ', ', first_name) as 'str_value'" +
                 " from Employee" +
                 " where employee_id = (" +
                 " SELECT `employee_id` as `value`" +
@@ -85,10 +85,19 @@ public class EmployeeStatsFragment extends Fragment {
                 ITEMS.clear();
                 JSONArray jsonArray = new JSONArray(json);
                 for (int i = 0; i < jsonArray.length(); i++) {
-                    ITEMS.add(new EmployeeStat(
-                            jsonArray.getJSONObject(i).getString("metric"),
-                            jsonArray.getJSONObject(i).getInt("value")
-                    ));
+
+                    String metric = jsonArray.getJSONObject(i).getString("metric");
+                    String value = "";
+
+                    if (jsonArray.getJSONObject(i).has("value"))
+                    {
+                        value = Integer.toString(jsonArray.getJSONObject(i).getInt("value"));
+                    } else if (jsonArray.getJSONObject(i).has("str_value"))
+                    {
+                        value = jsonArray.getJSONObject(i).getString("str_value");
+                    }
+
+                    ITEMS.add(new EmployeeStat(metric, value));
                 }
 
                 recyclerView.setAdapter(new EmployeeStatsRecyclerViewAdapter(ITEMS));

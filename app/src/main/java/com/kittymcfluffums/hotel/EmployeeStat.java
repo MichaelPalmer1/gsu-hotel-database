@@ -6,9 +6,9 @@ package com.kittymcfluffums.hotel;
  */
 public class EmployeeStat {
     private String metric;
-    private int metric_value;
+    private String metric_value;
 
-    public EmployeeStat(String metric, int metric_value) {
+    public EmployeeStat(String metric, String metric_value) {
         this.metric = metric;
         this.metric_value = metric_value;
     }
@@ -17,7 +17,7 @@ public class EmployeeStat {
         return metric;
     }
 
-    public int getMetric_value() {
+    public String getMetric_value() {
         return metric_value;
     }
 }
