@@ -52,7 +52,18 @@ public class EmployeeStatsFragment extends Fragment {
                 " order by COUNT(`employee_id`) DESC" +
                 " LIMIT 1" +
                 "    )");
-        queries.add("");
+        queries.add("SELECT " +
+                "'Percent of Employees (Male)' as 'Metric'," +
+                " CONCAT('%', (" +
+                "        (SELECT COUNT(gender) from Employee where gender = 'M') / COUNT(gender)" +
+                "    ) * 100) as 'str_value'" +
+                " FROM `Employee`");
+        queries.add("SELECT " +
+                "'Percent of Employees (Female)' as 'Metric'," +
+                " CONCAT('%', (" +
+                "        (SELECT COUNT(gender) from Employee where gender = 'F') / COUNT(gender)" +
+                "    ) * 100) as 'str_value'" +
+                " FROM `Employee`");
 
         HotelEmpStats emp_count = new HotelEmpStats();
         String emp_query = API.buildQuery(queries.get(0));
