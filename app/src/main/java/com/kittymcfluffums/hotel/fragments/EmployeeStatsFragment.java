@@ -24,12 +24,6 @@ import java.util.Arrays;
 public class EmployeeStatsFragment extends Fragment {
 
     public static final ArrayList<EmployeeStat> ITEMS = new ArrayList<>();
-    public static final ArrayList<String> METRICS = new ArrayList<>(Arrays.asList(
-            "Employee Count",
-            "Max Pay/Hour",
-            "Average Employee Age",
-            "Employee Working the most Hours"
-    ));
     private RecyclerView recyclerView;
 
     @Override
@@ -46,10 +40,10 @@ public class EmployeeStatsFragment extends Fragment {
         }
 
         ArrayList<String> queries = new ArrayList<>();
-        queries.add("SELECT '' as 'metric', COUNT(*) as 'value' from `Employee`;");
-        queries.add("SELECT '' as 'metric', max(SALARY) as 'value' from Employee");
-        queries.add("SELECT '' as 'metric', avg(age) as 'value' from Employee");
-        queries.add("select '' as 'metric', CONCAT(last_name, ', ', first_name) as 'str_value'" +
+        queries.add("SELECT 'Employee Count' as 'metric', COUNT(*) as 'value' from `Employee`;");
+        queries.add("SELECT 'Max Pay / Hour' as 'metric', max(SALARY) as 'value' from Employee");
+        queries.add("SELECT 'Average Employee Age' as 'metric', avg(age) as 'value' from Employee");
+        queries.add("select 'Employee working the most shifts' as 'metric', CONCAT(last_name, ', ', first_name) as 'str_value'" +
                 " from Employee" +
                 " where employee_id = (" +
                 " SELECT `employee_id` as `value`" +
@@ -58,6 +52,7 @@ public class EmployeeStatsFragment extends Fragment {
                 " order by COUNT(`employee_id`) DESC" +
                 " LIMIT 1" +
                 "    )");
+        queries.add("");
 
         HotelEmpStats emp_count = new HotelEmpStats();
         String emp_query = API.buildQuery(queries.get(0));
