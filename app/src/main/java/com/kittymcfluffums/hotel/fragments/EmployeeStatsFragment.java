@@ -77,7 +77,6 @@ public class EmployeeStatsFragment extends Fragment {
     class HotelEmpStats extends API.Post {
         protected void processData(String json) {
             try {
-                ITEMS.clear();
                 JSONArray jsonArray = new JSONArray(json);
                 for (int i = 0; i < jsonArray.length(); i++) {
 
