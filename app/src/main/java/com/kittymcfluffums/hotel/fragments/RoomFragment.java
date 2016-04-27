@@ -31,7 +31,6 @@ public class RoomFragment extends Fragment {
 
     public static final ArrayList<Room> ITEMS = new ArrayList<>();
     private RecyclerView recyclerView;
-
     protected Listeners mListener;
 
     @Override
@@ -69,8 +68,10 @@ public class RoomFragment extends Fragment {
         mListener = null;
     }
 
+    /**
+     * Loop through the room types returned by the API and put them in an ArrayList
+     */
     class APIRoom extends API.Get {
-
         protected void processData(String json) {
             try {
                 JSONArray jsonArray = new JSONArray(json);

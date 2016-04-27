@@ -50,6 +50,8 @@ public class ReservationRoomTypeDialog extends DialogFragment {
             recyclerView.setLayoutManager(new LinearLayoutManager(context));
         }
 
+        // Get all the room types that have rooms available during the specified date range and
+        // can accommodate a specified number of guests
         String sql = API.buildQuery(String.format(Locale.US,
                 "SELECT DISTINCT `Room_Types`.* FROM `Rooms` " +
                 "JOIN `Room_Types` ON `Room_Types`.`room_type_id` = `Rooms`.`room_type_id` " +

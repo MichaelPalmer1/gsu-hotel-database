@@ -74,6 +74,10 @@ public class ReservationGuestInfoDialog extends DialogFragment {
         mListener = null;
     }
 
+    /**
+     * Perform field validation
+     * @return boolean
+     */
     private boolean fieldsInvalid() {
         boolean has_error = false;
         if (first_name.getText().toString().equals("")) {

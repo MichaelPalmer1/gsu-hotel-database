@@ -82,6 +82,10 @@ public class ReservationPaymentDialog extends DialogFragment {
         mListener = null;
     }
 
+    /**
+     * Perform field validation
+     * @return boolean
+     */
     private boolean fieldsInvalid() {
         boolean has_error = false;
         if (card_type.getText().toString().equals("")) {

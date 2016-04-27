@@ -48,6 +48,7 @@ public class RoomInfoDialog extends DialogFragment {
             recyclerView.setLayoutManager(new LinearLayoutManager(context));
         }
 
+        // Get all the available rooms for the specified room type during the specified date range
         String sql = API.buildQuery(String.format(Locale.US,
                 "SELECT `room_number` FROM `Rooms` WHERE `room_type_id` = %d AND " +
                         "room_number NOT IN (SELECT `room_number` FROM `Room_Usage` " +

@@ -14,14 +14,31 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.Locale;
 
+/**
+ * API class
+ */
 public class API {
+    /**
+     * Build a query
+     * @param text SQL
+     * @return Formatted query
+     */
     public static String buildQuery(String text) {
         return String.format(Locale.US, "{\"query\":\"%s\"}", text);
     }
 
     public static abstract class Get extends AsyncTask<String, Void, String> {
+        /**
+         * Process the results of a query
+         * @param data Query results (as json)
+         */
         protected abstract void processData(String data);
 
+        /**
+         * Perform the GET query
+         * @param urls URL to read
+         * @return Query response
+         */
         @Override
         protected String doInBackground(String... urls) {
             String s, response = "";
@@ -57,6 +74,10 @@ public class API {
             return null;
         }
 
+        /**
+         * Run actions after the query finishes
+         * @param result Query result
+         */
         @Override
         protected void onPostExecute(String result) {
             // Check for cancellations
@@ -70,10 +91,22 @@ public class API {
         }
     }
 
+    /**
+     * Perform POST
+     */
     public static abstract class Post extends AsyncTask<String, Void, String> {
 
+        /**
+         * Process the resulting data
+         * @param data Result data
+         */
         protected abstract void processData(String data);
 
+        /**
+         * Perform the query
+         * @param data URL and data to query
+         * @return Data resulting
+         */
         @Override
         protected String doInBackground(String... data) {
             String result = null;
@@ -113,6 +146,10 @@ public class API {
             return result;
         }
 
+        /**
+         * Process the results and call processData()
+         * @param result Query results
+         */
         @Override
         protected void onPostExecute(String result) {
             // Check for cancellations

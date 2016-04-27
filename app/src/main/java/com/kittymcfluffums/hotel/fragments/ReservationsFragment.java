@@ -51,12 +51,14 @@ public class ReservationsFragment extends Fragment
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         guest_count.setAdapter(adapter);
 
+        // Setup the on click listener for the search button
         Button btn_search = (Button) view.findViewById(R.id.btn_reservation_search);
         btn_search.setOnClickListener(new View.OnClickListener() {
 
             @Override
             public void onClick(View v) {
                 if (mListener != null) {
+                    // Perform validation
                     boolean has_error = false;
                     if (date_from.getText().toString().equals("")) {
                         date_from.setError("Date From is required");
@@ -76,6 +78,7 @@ public class ReservationsFragment extends Fragment
                         return;
                     }
 
+                    // Trigger the listener
                     mListener.onReservationSearch(
                             date_from.getText().toString(),date_to.getText().toString(),
                             Integer.parseInt(guest_count.getSelectedItem().toString()));
@@ -83,6 +86,7 @@ public class ReservationsFragment extends Fragment
             }
         });
 
+        // Set the on click listener for the lookup button
         Button btn_lookup = (Button) view.findViewById(R.id.btn_reservation_lookup);
         final EditText reservation_id = (EditText) view.findViewById(R.id.reservation_id);
         btn_lookup.setOnClickListener(new View.OnClickListener() {
@@ -90,7 +94,7 @@ public class ReservationsFragment extends Fragment
             @Override
             public void onClick(View v) {
                 if (mListener != null) {
-                    boolean has_error = false;
+                    // Perform validation
                     if (reservation_id.getText().toString().equals("")) {
                         reservation_id.setError("Reservation ID is required");
                         return;
@@ -98,6 +102,7 @@ public class ReservationsFragment extends Fragment
                         reservation_id.setError(null);
                     }
 
+                    // Trigger the listener
                     mListener.onReservationLookup(Integer.parseInt(
                             reservation_id.getText().toString()));
                 }
@@ -123,13 +128,19 @@ public class ReservationsFragment extends Fragment
         mListener = null;
     }
 
+    /**
+     * Handle on click events
+     * @param v View
+     */
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.date_from:
+                // Open the date picker for the start date
                 createDatePicker(v);
                 break;
             case R.id.date_to:
+                // Open the date picker for the end date
                 createDatePicker(v);
                 break;
         }
@@ -155,6 +166,13 @@ public class ReservationsFragment extends Fragment
         datePickerDialog.show();
     }
 
+    /**
+     * Save the date selected from the date picker
+     * @param view DatePicker instance
+     * @param year Year
+     * @param monthOfYear Month
+     * @param dayOfMonth Day
+     */
     @Override
     public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
         // Set the corresponding EditText view with the selected date

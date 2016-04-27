@@ -47,6 +47,7 @@ public class ReservationDetailsDialog extends DialogFragment implements View.OnC
         end_date = (TextView) rootView.findViewById(R.id.reservation_details_end_date);
         total_cost = (EditText) rootView.findViewById(R.id.reservation_details_total_cost);
 
+        // Get all the details about a particular reservation
         APIReservationDetails reservationDetails = new APIReservationDetails();
         String sql = API.buildQuery(String.format(Locale.US,
                 "SELECT Reservation.room_number, Reservation.reservation_start_date, " +
@@ -61,6 +62,7 @@ public class ReservationDetailsDialog extends DialogFragment implements View.OnC
                         "WHERE Reservation.reservation_id = %d", reservation_id));
         reservationDetails.execute(Constants.API_QUERY_URL, sql);
 
+        // Create and set on click listeners for the update and delete buttons
         Button btn_update = (Button) rootView.findViewById(R.id.btn_reservation_update);
         Button btn_delete = (Button) rootView.findViewById(R.id.btn_reservation_delete);
         btn_update.setOnClickListener(this);
@@ -74,6 +76,7 @@ public class ReservationDetailsDialog extends DialogFragment implements View.OnC
         String sql;
         switch (v.getId()) {
             case R.id.btn_reservation_update:
+                // Update a reservation's total charge
                 APIReservationUpdate reservationUpdate = new APIReservationUpdate();
                 sql = API.buildQuery(String.format(Locale.US,
                         "UPDATE `Reservation` SET `total_charge` = %s WHERE `hotel_id` = %d AND " +
@@ -83,11 +86,13 @@ public class ReservationDetailsDialog extends DialogFragment implements View.OnC
                 Toast.makeText(getContext(), "Reservation updated", Toast.LENGTH_SHORT).show();
                 break;
             case R.id.btn_reservation_delete:
+                // Delete a reservation's payment
                 APIReservationDeletePayment deletePayment = new APIReservationDeletePayment();
                 sql = API.buildQuery(String.format(Locale.US,
                         "DELETE FROM `Payment` WHERE `reservation_id` = %d", reservation_id));
                 deletePayment.execute(Constants.API_QUERY_URL, sql);
 
+                // Delete the reservation's room usage
                 APIReservationDeleteRoomUsage deleteRoomUsage = new APIReservationDeleteRoomUsage();
                 sql = API.buildQuery(String.format(Locale.US,
                         "DELETE FROM `Room_Usage` WHERE `hotel_id` = %d " +
@@ -95,6 +100,7 @@ public class ReservationDetailsDialog extends DialogFragment implements View.OnC
                         Constants.HOTEL_ID, room_number.getText(), start_date.getText()));
                 deleteRoomUsage.execute(Constants.API_QUERY_URL, sql);
 
+                // Finally, delete the reservation
                 APIReservationDeleteReservation deleteReservation =
                         new APIReservationDeleteReservation();
                 sql = API.buildQuery(String.format(Locale.US,
@@ -104,6 +110,7 @@ public class ReservationDetailsDialog extends DialogFragment implements View.OnC
 
                 this.dismiss();
 
+                // Notify that it was deleted
                 Toast.makeText(getContext(), "Reservation deleted", Toast.LENGTH_LONG).show();
                 break;
         }
