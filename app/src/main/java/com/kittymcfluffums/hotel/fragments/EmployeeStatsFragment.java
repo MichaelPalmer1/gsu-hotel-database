@@ -19,7 +19,6 @@ import org.json.JSONArray;
 import org.json.JSONException;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 
 public class EmployeeStatsFragment extends Fragment {
 
@@ -32,13 +31,14 @@ public class EmployeeStatsFragment extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_employee_stats_list, container, false);
 
-        // Set the adapter
+        // Set the adapter so we can reuse the card view
         if (view instanceof RecyclerView) {
             Context context = view.getContext();
             recyclerView = (RecyclerView) view;
             recyclerView.setLayoutManager(new LinearLayoutManager(context));
         }
 
+        // set a list of queries to be used
         ArrayList<String> queries = new ArrayList<>();
         queries.add("SELECT 'Employee Count' as 'metric', COUNT(*) as 'value' from `Employee`;");
         queries.add("SELECT 'Max Pay / Hour' as 'metric', CONCAT('$', max(SALARY)) as 'str_value' from Employee");
@@ -65,6 +65,13 @@ public class EmployeeStatsFragment extends Fragment {
                 "    ) * 100, '%') as 'str_value'" +
                 " FROM `Employee`");
 
+        /*
+        Go through all of the queries and set a new background task for them to resolve a
+        query and begin the execution of that query (in the background to the server).
+
+        These can unfortunately not be put in a loop as the instances run in the background
+        and cannot be overwritten on the next iteration
+         */
         HotelEmpStats emp_count = new HotelEmpStats();
         String emp_query = API.buildQuery(queries.get(0));
         emp_count.execute(Constants.API_QUERY_URL, emp_query);
@@ -94,6 +101,10 @@ public class EmployeeStatsFragment extends Fragment {
 
 
     class HotelEmpStats extends API.Post {
+        /*
+        This will get out the employee stat metrics and values and pass them to the adapter
+        so the card views can be looped over properly
+         */
         protected void processData(String json) {
             try {
                 JSONArray jsonArray = new JSONArray(json);
