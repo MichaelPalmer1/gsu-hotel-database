@@ -53,16 +53,16 @@ public class EmployeeStatsFragment extends Fragment {
                 " LIMIT 1" +
                 "    )");
         queries.add("SELECT " +
-                "'Percent of Employees (Male)' as 'Metric'," +
-                " CONCAT('%', (" +
+                "'Percent of Employees (Male)' as 'metric'," +
+                " CONCAT((" +
                 "        (SELECT COUNT(gender) from Employee where gender = 'M') / COUNT(gender)" +
-                "    ) * 100) as 'str_value'" +
+                "    ) * 100, '%') as 'str_value'" +
                 " FROM `Employee`");
         queries.add("SELECT " +
-                "'Percent of Employees (Female)' as 'Metric'," +
-                " CONCAT('%', (" +
+                "'Percent of Employees (Female)' as 'metric'," +
+                " CONCAT((" +
                 "        (SELECT COUNT(gender) from Employee where gender = 'F') / COUNT(gender)" +
-                "    ) * 100) as 'str_value'" +
+                "    ) * 100, '%') as 'str_value'" +
                 " FROM `Employee`");
 
         HotelEmpStats emp_count = new HotelEmpStats();
@@ -80,6 +80,14 @@ public class EmployeeStatsFragment extends Fragment {
         HotelEmpStats most_frequent_employee = new HotelEmpStats();
         String most_frequent_employee_query = API.buildQuery(queries.get(3));
         most_frequent_employee.execute(Constants.API_QUERY_URL, most_frequent_employee_query);
+
+        HotelEmpStats male_employees = new HotelEmpStats();
+        String male_employees_query = API.buildQuery(queries.get(4));
+        male_employees.execute(Constants.API_QUERY_URL, male_employees_query);
+
+        HotelEmpStats female_employees = new HotelEmpStats();
+        String female_employees_query = API.buildQuery(queries.get(5));
+        female_employees.execute(Constants.API_QUERY_URL, female_employees_query);
 
         return view;
     }
