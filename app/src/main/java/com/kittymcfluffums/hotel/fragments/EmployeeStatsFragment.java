@@ -41,7 +41,7 @@ public class EmployeeStatsFragment extends Fragment {
 
         ArrayList<String> queries = new ArrayList<>();
         queries.add("SELECT 'Employee Count' as 'metric', COUNT(*) as 'value' from `Employee`;");
-        queries.add("SELECT 'Max Pay / Hour' as 'metric', max(SALARY) as 'value' from Employee");
+        queries.add("SELECT 'Max Pay / Hour' as 'metric', CONCAT('$', max(SALARY)) as 'str_value' from Employee");
         queries.add("SELECT 'Average Employee Age' as 'metric', avg(age) as 'value' from Employee");
         queries.add("select 'Employee working the most shifts' as 'metric', CONCAT(last_name, ', ', first_name) as 'str_value'" +
                 " from Employee" +
